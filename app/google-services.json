@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "259339067434",
+    "firebase_url": "https://kinkong-977fc.firebaseio.com",
+    "project_id": "kinkong-977fc",
+    "storage_bucket": "kinkong-977fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259339067434:android:c7ead4c280595cd1",
+        "android_client_info": {
+          "package_name": "com.kinkong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259339067434-5ijh8jo5pf12t476rc2r4clos05e8lj4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kinkong",
+            "certificate_hash": "9576b27ca5f3124cd83bbb1dad0975730e4f453c"
+          }
+        },
+        {
+          "client_id": "259339067434-8c01asvvdppsceie25cb64vi7uarhr1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLMv5wJaFu2M1C38n1evC5jU2-1iTlyrQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259339067434-8c01asvvdppsceie25cb64vi7uarhr1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
