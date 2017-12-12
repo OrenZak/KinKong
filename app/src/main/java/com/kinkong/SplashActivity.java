@@ -63,8 +63,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void moveToTutorial() {
+        startActivity(CountDownActivity.getIntent(this));
+
         Intent tutorialIntent = new Intent(SplashActivity.this, KinTutorial.class);
-        startActivity(tutorialIntent);
+        //startActivity(tutorialIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
