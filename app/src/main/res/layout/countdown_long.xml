@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
@@ -13,12 +11,14 @@
         android:id="@+id/hour0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:measureAllChildren="false"
         />
 
     <TextSwitcher
         android:id="@+id/hour1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:measureAllChildren="false"
         />
 
     <TextView
@@ -32,12 +32,14 @@
         android:id="@+id/min0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:measureAllChildren="false"
         />
 
     <TextSwitcher
         android:id="@+id/min1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:measureAllChildren="false"
         />
 
     <TextView
@@ -51,12 +53,14 @@
         android:id="@+id/sec0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:measureAllChildren="false"
         />
 
     <TextSwitcher
         android:id="@+id/sec1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:measureAllChildren="false"
         />
 
 

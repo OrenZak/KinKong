@@ -11,13 +11,13 @@
     <TextSwitcher
         android:id="@+id/sec0"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:measureAllChildren="false"/>
 
     <TextSwitcher
         android:id="@+id/sec1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_height="wrap_content"
+        android:measureAllChildren="false"/>
 </LinearLayout>
 

@@ -48,6 +48,10 @@ public class FBDatabase {
         database.getReference("questions").child(index + "").addListenerForSingleValueEvent(valueEventListener);
     }
 
+    public void getPrize(ValueEventListener valueEventListener) {
+        database.getReference("questions").child(nextQuestionNum + "").child("prize").addListenerForSingleValueEvent(valueEventListener);
+    }
+
     public void setWinner(String publicAddress) {
         database.getReference("questions").child(nextQuestionNum + "").child("winners").push().setValue(publicAddress);
 

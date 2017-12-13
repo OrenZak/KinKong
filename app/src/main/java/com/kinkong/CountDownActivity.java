@@ -69,6 +69,7 @@ public class CountDownActivity extends AppCompatActivity {
         long time = FBDatabase.getInstance().nextQuestion.getTimeStamp();
         long currentTime = System.currentTimeMillis();
         return time - currentTime;
+//        return 10 * 1000;
     }
 
     private void moveToQuestion() {
@@ -78,7 +79,7 @@ public class CountDownActivity extends AppCompatActivity {
     }
 
     public void openAccountInfo(View view) {
-        //TODO start openAccountInfo
+        startActivity(new Intent(this, AccountInfoActivity.class));
     }
 
     public void openTutorial(View view) {

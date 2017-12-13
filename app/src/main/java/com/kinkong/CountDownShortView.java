@@ -34,7 +34,7 @@ public class CountDownShortView extends LinearLayout {
         TextView textView = new TextView(getContext());
         textView.setGravity(Gravity.CENTER);
         //TODO need to fix this not const
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 2);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 34);
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         return textView;
