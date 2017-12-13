@@ -13,6 +13,8 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         backButton = findViewById(R.id.back_button);
-        backButton.setOnClickListener(v -> onBackPressed());
+        if(backButton != null) {
+            backButton.setOnClickListener(v -> onBackPressed());
+        }
     }
 }

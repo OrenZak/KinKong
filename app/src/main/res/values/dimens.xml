@@ -8,4 +8,7 @@
     <dimen name="title_normal">20sp</dimen>
     <dimen name="count_down_font_size_big">34sp</dimen>
     <dimen name="bottom_panel_height">60dp</dimen>
+
+    <dimen name="block_margin">25dp</dimen>
+
 </resources>
