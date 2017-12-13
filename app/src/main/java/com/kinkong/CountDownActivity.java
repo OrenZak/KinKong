@@ -9,12 +9,18 @@ import android.widget.TextView;
 
 import com.kinkong.database.FBDatabase;
 
+import kin.sdk.core.Balance;
+import kin.sdk.core.KinClient;
+import kin.sdk.core.ResultCallback;
+
 
 public class CountDownActivity extends AppCompatActivity {
 
     public static Intent getIntent(Context context) {
         return new Intent(context, CountDownActivity.class);
     }
+
+    private KinClient kinClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,32 +31,38 @@ public class CountDownActivity extends AppCompatActivity {
         countDownView.setListener(this::moveToQuestion);
         countDownView.startCount(getCountDownTime());
 
+        kinClient = ((App)getApplication()).getKinClient();
+
         updatePrize();
-        updateBalance();
+        kinClient.getAccount().getBalance().run(new ResultCallback<Balance>() {
+            @Override
+            public void onResult(Balance balance) {
+                updateBalance(balance);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
 
     }
 
     private void updatePrize() {
         TextView prize = findViewById(R.id.prize);
-        String prizeStr = getPrize() + " Kin";
+        String prizeStr = getPrize() + " KIN";
         prize.setText(prizeStr);
     }
 
-    private void updateBalance() {
+    private void updateBalance(Balance accountBalance) {
         TextView balance = findViewById(R.id.balance);
-        String balanceStr = getKinBalance() + " Kin";
+        String balanceStr = accountBalance.value(1) + " KIN";
         balance.setText(balanceStr);
     }
 
     private int getPrize() {
-        //TODO
         return 5000;
-    }
-
-
-    private int getKinBalance() {
-        //TODO get balance
-        return 199;
     }
 
     private long getCountDownTime() {

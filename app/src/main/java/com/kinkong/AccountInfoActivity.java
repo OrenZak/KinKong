@@ -65,7 +65,7 @@ public class AccountInfoActivity extends BaseActivity {
         doneButton.setOnClickListener(v -> {
             String backupPassphrase = backupEditText.getText().toString();
             String privateKey = exportPrivateKey(backupPassphrase);
-            showPrivateAddress(privateKey);
+            showPrivateKey(privateKey);
             hideKeyboard(backupEditText);
             backupEditText.setText("");
         });
@@ -116,7 +116,7 @@ public class AccountInfoActivity extends BaseActivity {
         Toast.makeText(this,"Copied to your clipboard",Toast.LENGTH_SHORT).show();
     }
 
-    protected void hideKeyboard(View view) {
+    private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
@@ -132,7 +132,7 @@ public class AccountInfoActivity extends BaseActivity {
         return exportedKey;
     }
 
-    private void showPrivateAddress(String privateKey) {
+    private void showPrivateKey(String privateKey) {
         try {
             JSONObject jsonObject = new JSONObject(privateKey);
             privateKeyText.setText(jsonObject.toString());

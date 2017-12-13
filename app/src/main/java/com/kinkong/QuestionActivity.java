@@ -12,9 +12,13 @@ import com.kinkong.database.data.Question;
 import java.util.ArrayList;
 import java.util.List;
 
+import kin.sdk.core.KinAccount;
+import kin.sdk.core.KinClient;
+
 public class QuestionActivity extends AppCompatActivity {
 
     private Question question;
+    private KinAccount account;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, QuestionActivity.class);
@@ -29,12 +33,7 @@ public class QuestionActivity extends AppCompatActivity {
         sendAnswer(Integer.parseInt((String)tag));
 
         //TODO wait for timer
-        view.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setVotings();
-            }
-        }, 3000);
+        view.postDelayed(() -> setVotings(), 3000);
     };
 
     private void sendAnswer(int answerIndex) {
@@ -45,9 +44,8 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    //TODO
     private String getPublicAddress() {
-        return "TODO";
+        return account.getPublicAddress();
     }
 
     private void setVotings() {
@@ -71,6 +69,7 @@ public class QuestionActivity extends AppCompatActivity {
         answers.add(findViewById(R.id.answer1));
         answers.add(findViewById(R.id.answer2));
 
+        account = ((App)getApplication()).getKinClient().getAccount();
         question = FBDatabase.getInstance().nextQuestion;
         initAnswers();
     }

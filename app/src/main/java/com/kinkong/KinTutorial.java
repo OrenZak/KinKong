@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import java.io.File;
 
@@ -26,13 +27,14 @@ public class KinTutorial extends BaseVideoActivity {
 
     @Override
     MediaPlayer.OnCompletionListener getCompletionListener() {
-        return mp -> startActivity(CountDownActivity.getIntent(this));
+        return mp -> moveToCountDown();
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_video_base);
         super.onCreate(savedInstanceState);
+        findViewById(R.id.skip).setOnClickListener(v -> moveToCountDown());
     }
 
     @Override
@@ -45,5 +47,9 @@ public class KinTutorial extends BaseVideoActivity {
     protected void onStop() {
         super.onStop();
         releaseMediaPlayer();
+    }
+
+    private void moveToCountDown() {
+        startActivity(CountDownActivity.getIntent(this));
     }
 }

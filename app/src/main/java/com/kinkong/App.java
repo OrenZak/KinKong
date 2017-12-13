@@ -2,6 +2,8 @@ package com.kinkong;
 
 import android.app.Application;
 
+import com.kinkong.database.FBDatabase;
+
 import kin.sdk.core.KinClient;
 import kin.sdk.core.ServiceProvider;
 import kin.sdk.core.exception.EthereumClientException;
@@ -28,6 +30,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FBDatabase.getInstance().cacheBasicData();
         createKinClient(NetWorkType.ROPSTEN);
 
     }

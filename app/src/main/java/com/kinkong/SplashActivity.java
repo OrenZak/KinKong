@@ -1,5 +1,6 @@
 package com.kinkong;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,18 +23,25 @@ public class SplashActivity extends AppCompatActivity {
     private File kinTutorialFile;
     private OutputStream outStream;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        sharedPreferences = getSharedPreferences(Constants.MAIN_SHAEREDPREF, MODE_PRIVATE);
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("test_monky.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
-        FBDatabase.getInstance().cacheBasicData();
         createAccount();
-        try {
-            downloadTutorial();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(isFirsTime()) {
+            try {
+                downloadTutorial();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            moveToCountDown();
         }
     }
 
@@ -47,7 +55,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void downloadTutorial() throws IOException {
-        //TODO add show once
+        sharedPreferences.edit().putBoolean(Constants.FIRST_TIME,false).apply();
         if(kinTutorialFile.exists()){
             new Handler().postDelayed(() -> moveToTutorial(), 1000);
 
@@ -70,6 +78,19 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(KinTutorial.getIntent(this));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
+    }
+
+    private void moveToCountDown() {
+        new Handler().postDelayed(() -> {
+            startActivity(CountDownActivity.getIntent(SplashActivity.this));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+        }, 1000);
+
+    }
+
+    private boolean isFirsTime() {
+        return sharedPreferences.getBoolean(Constants.FIRST_TIME, true);
     }
 
     @Override
