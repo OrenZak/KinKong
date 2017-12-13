@@ -1,32 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient"
-    android:orientation="vertical"
     tools:context="com.kinkong.QuestionActivity">
 
+    <FrameLayout
+        android:id="@+id/winner_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:scaleType="center"
+            android:src="@drawable/kin_win_bg" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="120dp">
+
+            <TextView
+                style="@style/text.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
+                android:text="@string/correct" />
+
+            <TextView
+                style="@style/text.White.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="@string/you_are_a_rock_star" />
+
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:onClick="closeQuestion"
+        android:padding="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/close"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/background_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:scaleType="centerInside"
+        android:src="@drawable/white_flower_full" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="30dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/kk_logo_small" />
 
     <LinearLayout
-        android:id="@+id/top"
+        android:id="@+id/question_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="30dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        android:paddingTop="95dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:scaleType="centerInside"
-            android:src="@drawable/kk_logo_small"
-            android:paddingBottom="15dp"/>
 
         <com.kinkong.CountDownShortView
             android:id="@+id/counter"
@@ -41,8 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingBottom="20dp"
-            android:text="@string/question"
-            />
+            android:text="@string/question" />
 
         <TextView
             android:id="@+id/question"
@@ -55,16 +113,37 @@
 
     </LinearLayout>
 
-
-    <ImageView
+    <LinearLayout
+        android:id="@+id/loser_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:scaleType="centerInside"
-        android:src="@drawable/white_flower_full" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="120dp"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/text.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:text="@string/wrong_answer" />
+
+        <TextView
+            style="@style/text.White.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="@string/try_next_time" />
+
+
+    </LinearLayout>
+
 
     <LinearLayout
-        android:id="@+id/questions"
+        android:id="@+id/answers_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

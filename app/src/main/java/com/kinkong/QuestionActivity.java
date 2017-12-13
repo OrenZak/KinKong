@@ -20,7 +20,7 @@ public class QuestionActivity extends AppCompatActivity {
     private Question question;
     private KinAccount account;
     private static final int DURATION_SECONDS = 10;
-    private boolean isWinner;
+    private int answerIndex = -1;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, QuestionActivity.class);
@@ -31,18 +31,37 @@ public class QuestionActivity extends AppCompatActivity {
         AnswerView answerView = (AnswerView) view;
         answerView.setSelected(true);
         disableClicks();
-        Object tag = view.getTag();
-        sendAnswer(Integer.parseInt((String) tag));
+        answerIndex = Integer.parseInt((String) view.getTag());
+        sendAnswer();
     };
 
-    private void sendAnswer(int answerIndex) {
-        isWinner = answerIndex == question.correct_answer;
-        if (isWinner) {
+    private void sendAnswer() {
+        if (isWinner()) {
             FBDatabase.getInstance().setWinner(getPublicAddress());
         } else {
             FBDatabase.getInstance().setAnswer(answerIndex);
         }
     }
+
+    private boolean isWinner(){
+        return answerIndex == question.correct_answer;
+    }
+
+    private void animateClose() {
+        View view = findViewById(R.id.close_button);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    private void updateLoser() {
+        findViewById(R.id.question_layout).setVisibility(View.GONE);
+        findViewById(R.id.loser_layout).setVisibility(View.VISIBLE);
+    }
+
+    private void updateWinner() {
+        findViewById(R.id.question_layout).setVisibility(View.GONE);
+        findViewById(R.id.winner_layout).setVisibility(View.VISIBLE);
+    }
+
 
     private String getPublicAddress() {
         return account.getPublicAddress();
@@ -66,7 +85,6 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +104,13 @@ public class QuestionActivity extends AppCompatActivity {
         CountDownShortView countDownShortView = findViewById(R.id.counter);
         countDownShortView.setListener(() -> {
             disableClicks();
-            setVotings();
+            animateClose();
+            if(isWinner()){
+                updateWinner();
+            }else{
+                updateLoser();
+            }
+            countDownShortView.postDelayed(() -> setVotings(), 5000);
         });
         countDownShortView.startCount(DURATION_SECONDS * 1000);
     }
@@ -104,4 +128,8 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
 
+    public void closeQuestion(View view) {
+        startActivity(CountDownActivity.getIntent(this));
+        finish();
+    }
 }

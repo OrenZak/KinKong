@@ -68,7 +68,8 @@ public class CountDownActivity extends AppCompatActivity {
     private long getCountDownTime() {
         long time = question.getTimeStamp();
         long currentTime = System.currentTimeMillis();
-        return time - currentTime;
+        //return time - currentTime;
+        return 5* 1000;
     }
 
     private void moveToQuestion() {
