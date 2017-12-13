@@ -25,7 +25,7 @@
         style="@style/text.White.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="@dimen/count_down_font_size_big"
         android:text=":" />
 
     <TextSwitcher
@@ -44,7 +44,7 @@
         style="@style/text.White.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="@dimen/count_down_font_size_big"
         android:text=":" />
 
     <TextSwitcher

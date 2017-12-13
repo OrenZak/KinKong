@@ -11,27 +11,33 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
-        android:background="@drawable/blue_gradient"
-        android:padding="10dp">
+        android:layout_marginBottom="@dimen/bottom_panel_height"
+        android:background="@drawable/blue_gradient">
 
-        <TextView
-            style="@style/text.White"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
-            android:text="Kin - Kong"
-            android:textSize="25dp" />
+            android:padding="30dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/kk_logo_small" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tutorial_btn"
-            style="@style/text.White.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
             android:paddingRight="15dp"
-            android:text="\?"
-            android:textSize="20dp" />
+            android:paddingTop="30dp"
+            android:onClick="openTutorial"
+            android:src="@drawable/whats_kin_icon" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:src="@drawable/white_flower_full" />
 
         <LinearLayout
             android:id="@+id/center"
@@ -45,17 +51,18 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:padding="15dp"
-                android:scaleType="centerInside"
                 android:background="#9955aaff"
-                />
+                android:padding="15dp"
+                android:scaleType="centerInside" />
 
             <TextView
                 style="@style/text.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Next Question In:" />
+                android:text="@string/next_question_in"
+                android:textSize="@dimen/title_big"
+                />
 
             <com.kinkong.CountDownView
                 android:id="@+id/countdown_view"
@@ -67,22 +74,51 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/prize_layout"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="74dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/text.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_prize_is"
+                android:textSize="@dimen/title_big"/>
+
+            <TextView
+                android:id="@+id/prize"
+                style="@style/text.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+               />
+
+
+
+        </LinearLayout>
+
     </FrameLayout>
 
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/bottom_panel_height"
         android:layout_gravity="bottom"
         android:background="@color/white">
 
-        <TextView
-            style="@style/text.Blue.Bold"
+        <ImageView
+            android:id="@+id/wallet_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
+            android:scaleType="centerInside"
             android:paddingRight="20dp"
-            android:text=">" />
+            android:onClick="openAccountInfo"
+            android:src="@drawable/enter_icon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -94,13 +130,15 @@
                 style="@style/text.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Balance: " />
+                android:text="@string/my_balance" />
 
             <TextView
+                android:id="@+id/balance"
                 style="@style/text.Blue.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200 kin" />
+                android:paddingLeft="5dp"
+                android:text="0 Kin" />
 
 
         </LinearLayout>
