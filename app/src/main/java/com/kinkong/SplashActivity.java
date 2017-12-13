@@ -34,7 +34,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
         sharedPreferences = getSharedPreferences(Constants.MAIN_SHAEREDPREF, MODE_PRIVATE);
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("test_monky.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
