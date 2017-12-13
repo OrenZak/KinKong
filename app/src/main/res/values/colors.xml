@@ -6,8 +6,11 @@
 
     <color name="text_blue">#0055bb</color>
     <color name="white">#fff</color>
+    <color name="white_50op">#7effffff</color>
 
-    <color name="blue">#005fff</color>
-    <color name="blue_pale">#00ccee</color>
+
+    <color name="blue">#0055bb</color>
+    <color name="blue_60op">#e9005fff</color>
+    <color name="blue_pale">#3399bb</color>
     <color name="answer_selected">#777799dd</color>
 </resources>

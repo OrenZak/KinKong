@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/blue_gradient">
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginTop="@dimen/main_margin"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/kk_logo_small"
+        app:layout_constraintBottom_toBottomOf="@+id/back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/back_button" />
+
+    <TextView
+        android:id="@+id/public_address_title"
+        style="@style/text.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:text="Public Address:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/copy_public"
+        style="@style/text.White.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/block_margin"
+        android:layout_marginStart="8dp"
+        android:text="Copy"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/public_address_title"
+        app:layout_constraintTop_toTopOf="@+id/public_address_title" />
+
+
+    <TextView
+        android:id="@+id/public_address"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginEnd="@dimen/block_margin"
+        android:layout_marginStart="@dimen/block_margin"
+        android:layout_marginTop="8dp"
+        android:padding="@dimen/main_margin"
+        style="@style/text.Blue"
+        android:textSize="15sp"
+        android:background="@drawable/background_rounded_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/public_address_title"
+        tools:text="0xkjshdkjahd3287jkdskhkjsdhfjksdhfjksdhfjkshdfjkhsdfjh"/>
+
+
+    <TextView
+        android:id="@+id/backup_title"
+        style="@style/text.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/block_margin"
+        android:layout_marginTop="24dp"
+        android:text="Backup you Account:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/public_address" />
+
+
+    <LinearLayout
+        android:id="@+id/backup_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/block_margin"
+        android:layout_marginStart="@dimen/block_margin"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_title">
+
+        <EditText
+            android:id="@+id/backup_passphrase"
+            android:layout_width="0dp"
+            android:paddingLeft="@dimen/main_margin"
+            android:hint="Enter a passphrase"
+            style="@style/text.Blue"
+            android:textSize="15sp"
+            android:background="@drawable/background_left_rounded_white"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            tools:text="lala"/>
+
+        <TextView
+            android:id="@+id/done"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_right_rounded_blue"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="Done"
+            android:textColor="@drawable/text_view_selector"
+            android:textSize="14sp"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/private_key_title"
+        style="@style/text.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/block_margin"
+        android:layout_marginTop="24dp"
+        android:text="Public Address:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_container"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/copy_private"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/block_margin"
+        style="@style/text.White.Bold"
+        android:text="Copy"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/private_key_title"
+        app:layout_constraintTop_toTopOf="@+id/private_key_title"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+
+    <TextView
+        android:id="@+id/private_key"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
+        android:layout_marginEnd="@dimen/block_margin"
+        android:layout_marginStart="@dimen/block_margin"
+        android:layout_marginTop="8dp"
+        style="@style/text.Blue"
+        android:textSize="15sp"
+        android:padding="@dimen/main_margin"
+        android:background="@drawable/background_rounded_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/private_key_title"
+        tools:text="{\naksdk\lkajsdkj\njksdklasdskjdfhsjkdfhjksdhfjksdhf\n}"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+
+
+    <TextView
+        android:id="@+id/whats_kin"
+        style="@style/text.Blue"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="What's Kin?"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/arrow_kin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:rotation="180"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        android:tint="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/whats_kin"
+        app:layout_constraintEnd_toEndOf="@+id/whats_kin"
+        app:layout_constraintTop_toTopOf="@+id/whats_kin" />
+
+</android.support.constraint.ConstraintLayout>

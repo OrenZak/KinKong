@@ -7,12 +7,4 @@
     android:background="@drawable/blue_gradient"
     tools:context="com.kinkong.SplashActivity">
 
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:src="@drawable/kk_big_logo"
-        />
-
 </FrameLayout>

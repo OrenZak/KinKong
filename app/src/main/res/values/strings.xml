@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">KinKong</string>
+
     <string name="next_question_in">Next Question In:</string>
     <string name="my_balance">My Balance:</string>
     <string name="total_prize_is">Total prize is:</string>
+
+    <string name="whats_kin">Envisioned as a general purpose cryptocurrency for use in everyday digital services, Kin will be used for all transaction within the Kin Ecosystem.\n\nImplemented on the public Ethereum blockchain as an ERC20 token, Kin will server as the basis of interoperability with other digital services in the Kin Ecosystem.</string>
+
 </resources>
