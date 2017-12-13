@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.kinkong.database.FBDatabase;
+import com.kinkong.database.data.Question;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
+
+    private Question question;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, QuestionActivity.class);
@@ -19,9 +24,11 @@ public class QuestionActivity extends AppCompatActivity {
     View.OnClickListener clickListener = view -> {
         AnswerView answerView = (AnswerView) view;
         answerView.setSelected(true);
-        Object tag = view.getTag();
         disableClicks();
-        sendAnswer((String) view.getTag());
+        Object tag = view.getTag();
+        sendAnswer(Integer.parseInt((String)tag));
+
+        //TODO wait for timer
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -30,8 +37,17 @@ public class QuestionActivity extends AppCompatActivity {
         }, 3000);
     };
 
-    private void sendAnswer(String answer) {
-        //TODO
+    private void sendAnswer(int answerIndex) {
+        if(answerIndex == question.correct_answer){
+            FBDatabase.getInstance().setWinner(getPublicAddress());
+        } else{
+            FBDatabase.getInstance().setAnswer(answerIndex);
+        }
+    }
+
+    //TODO
+    private String getPublicAddress() {
+        return "TODO";
     }
 
     private void setVotings() {
@@ -55,6 +71,7 @@ public class QuestionActivity extends AppCompatActivity {
         answers.add(findViewById(R.id.answer1));
         answers.add(findViewById(R.id.answer2));
 
+        question = FBDatabase.getInstance().nextQuestion;
         initAnswers();
     }
 

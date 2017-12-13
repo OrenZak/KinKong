@@ -1,5 +1,6 @@
 package com.kinkong;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -15,6 +16,11 @@ public class KinTutorial extends BaseVideoActivity {
     @Override
     boolean isLocal() {
         return true;
+    }
+
+    @Override
+    MediaPlayer.OnCompletionListener getCompletionListener() {
+        return mp -> startActivity(CountDownActivity.getIntent(this));
     }
 
     @Override

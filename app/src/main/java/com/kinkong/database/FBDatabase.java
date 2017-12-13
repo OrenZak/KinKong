@@ -64,10 +64,13 @@ public class FBDatabase {
         database.getReference("questions").child(index + "").addListenerForSingleValueEvent(valueEventListener);
     }
 
-    public void setWinner(int correctAnswer ,String publicAddress) {
+    public void setWinner(String publicAddress) {
         database.getReference("questions").child(nextQuestionNum + "").child("winners").push().setValue(publicAddress);
 
-        DatabaseReference answerCount = database.getReference("questions/" + nextQuestionNum + "/answers_count/" + correctAnswer);
+    }
+
+    public void setAnswer(int answerIndex) {
+        DatabaseReference answerCount = database.getReference("questions/" + nextQuestionNum + "/answers_count/" + answerIndex);
         upCount(answerCount);
     }
 

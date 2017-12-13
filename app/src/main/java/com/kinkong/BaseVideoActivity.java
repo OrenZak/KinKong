@@ -21,6 +21,8 @@ abstract class BaseVideoActivity extends BaseActivity {
 
     abstract boolean isLocal();
 
+    abstract MediaPlayer.OnCompletionListener getCompletionListener();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +54,12 @@ abstract class BaseVideoActivity extends BaseActivity {
                     mediaPlayer.setSurface(surface);
                     mediaPlayer.setLooping(false);
                     mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnCompletionListener(getCompletionListener());
 
                     // Play video when the media source is ready for playback.
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mediaPlayer) {
-                            adjustAspectRatio(mediaPlayer.getVideoWidth(), mediaPlayer.getVideoHeight());
-                            mediaPlayer.start();
-                        }
+                    mediaPlayer.setOnPreparedListener(mediaPlayer -> {
+                        adjustAspectRatio(mediaPlayer.getVideoWidth(), mediaPlayer.getVideoHeight());
+                        mediaPlayer.start();
                     });
 
                 } catch (Exception e) {
