@@ -10,8 +10,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -115,5 +117,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         storageReference = null;
+        sharedPreferences = null;
     }
 }
