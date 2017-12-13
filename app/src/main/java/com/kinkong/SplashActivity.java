@@ -1,6 +1,5 @@
 package com.kinkong;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import com.google.firebase.storage.StorageReference;
 import com.kinkong.database.FBDatabase;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -48,30 +48,22 @@ public class SplashActivity extends AppCompatActivity {
 
     private void downloadTutorial() throws IOException {
         //TODO add show once
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, AccountInfoActivity.class);
-            startActivity(intent);
-        }, 500);
+        if(kinTutorialFile.exists()){
+            new Handler().postDelayed(() -> moveToTutorial(), 1000);
 
-//        if(kinTutorialFile.exists()){
-//            new Handler().postDelayed(() -> moveToTutorial(), 1000);
-//
-//        }
-//        else {
-//            outStream = new FileOutputStream(kinTutorialFile);
-//            storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//                @Override
-//                public void onSuccess(byte[] bytes) {
-//                    try {
-//                        outStream.write(bytes);
-//                        outStream.close();
-//                        moveToTutorial();
-//                    } catch (IOException ex) {
-//                        ex.printStackTrace();
-//                    }
-//                }
-//            });
-//        }
+        }
+        else {
+            outStream = new FileOutputStream(kinTutorialFile);
+            storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+                try {
+                    outStream.write(bytes);
+                    outStream.close();
+                    moveToTutorial();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+        }
     }
 
     private void moveToTutorial() {
