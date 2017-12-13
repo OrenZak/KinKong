@@ -1,5 +1,7 @@
 package com.kinkong;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +9,10 @@ import android.support.annotation.Nullable;
 import java.io.File;
 
 public class KinTutorial extends BaseVideoActivity {
+
+    public static Intent getIntent(Context context){
+        return  new Intent(context, KinTutorial.class);
+    }
 
     @Override
     String getVideoURL() {

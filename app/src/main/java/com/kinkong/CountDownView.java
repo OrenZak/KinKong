@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,13 @@ public class CountDownView extends LinearLayout {
     ICountDownListener listener;
 
     ViewSwitcher.ViewFactory factory = (ViewSwitcher.ViewFactory) () -> {
-        TextView text = new TextView(getContext());
-        text.setGravity(Gravity.CENTER);
-        text.setTextSize(30);
-        text.setTextColor(Color.WHITE);
-        text.setTypeface(Typeface.DEFAULT_BOLD);
-        return text;
+        TextView textView = new TextView(getContext());
+        textView.setGravity(Gravity.CENTER);
+        //TODO need to fix this not const
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 34);
+        textView.setTextColor(Color.WHITE);
+        textView.setTypeface(Typeface.DEFAULT_BOLD);
+        return textView;
     };
 
     public CountDownView(Context context) {
@@ -51,14 +53,6 @@ public class CountDownView extends LinearLayout {
     public CountDownView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
-        factory = () -> {
-            TextView text = new TextView(getContext());
-            text.setGravity(Gravity.CENTER);
-            text.setTextSize(30);
-            text.setTextColor(Color.WHITE);
-            text.setTypeface(Typeface.DEFAULT_BOLD);
-            return text;
-        };
     }
 
     private void init(Context context) {

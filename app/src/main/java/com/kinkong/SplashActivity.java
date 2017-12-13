@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
     private void downloadTutorial() throws IOException {
         //TODO add show once
         if(kinTutorialFile.exists()){
-            new Handler().postDelayed(() -> moveToTutorial(), 500);
+            new Handler().postDelayed(() -> moveToTutorial(), 1000);
 
         }
         else {
@@ -59,8 +59,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void moveToTutorial() {
-        Intent tutorialIntent = new Intent(SplashActivity.this, KinTutorial.class);
-        startActivity(tutorialIntent);
+        startActivity(KinTutorial.getIntent(this));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

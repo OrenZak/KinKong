@@ -7,7 +7,7 @@
     <color name="text_blue">#0055bb</color>
     <color name="white">#fff</color>
 
-    <color name="blue">#0055bb</color>
-    <color name="blue_pale">#3399bb</color>
+    <color name="blue">#005fff</color>
+    <color name="blue_pale">#00ccee</color>
     <color name="answer_selected">#777799dd</color>
 </resources>

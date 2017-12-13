@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">KinKong</string>
+    <string name="next_question_in">Next Question In:</string>
+    <string name="my_balance">My Balance:</string>
+    <string name="total_prize_is">Total prize is:</string>
 </resources>

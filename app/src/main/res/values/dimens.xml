@@ -3,4 +3,9 @@
     <dimen name="main_margin">16dp</dimen>
     <dimen name="answer_height">50dp</dimen>
     <dimen name="answer_corner">25dp</dimen>
+
+    <dimen name="title_big">24sp</dimen>
+    <dimen name="title_normal">20sp</dimen>
+    <dimen name="count_down_font_size_big">34sp</dimen>
+    <dimen name="bottom_panel_height">60dp</dimen>
 </resources>
