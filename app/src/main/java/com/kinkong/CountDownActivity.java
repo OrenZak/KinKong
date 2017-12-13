@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.kinkong.database.FBDatabase;
+import com.kinkong.database.data.Question;
 
 import kin.sdk.core.Balance;
 import kin.sdk.core.KinClient;
@@ -21,17 +22,18 @@ public class CountDownActivity extends AppCompatActivity {
     }
 
     private KinClient kinClient;
+    private Question question;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
+        question = FBDatabase.getInstance().nextQuestion;
+        kinClient = ((App)getApplication()).getKinClient();
 
         CountDownView countDownView = findViewById(R.id.countdown_view);
         countDownView.setListener(this::moveToQuestion);
         countDownView.startCount(getCountDownTime());
-
-        kinClient = ((App)getApplication()).getKinClient();
 
         updatePrize();
         kinClient.getAccount().getBalance().run(new ResultCallback<Balance>() {
@@ -45,8 +47,6 @@ public class CountDownActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void updatePrize() {
@@ -62,14 +62,13 @@ public class CountDownActivity extends AppCompatActivity {
     }
 
     private int getPrize() {
-        return 5000;
+        return question.getPrize();
     }
 
     private long getCountDownTime() {
-        long time = FBDatabase.getInstance().nextQuestion.getTimeStamp();
+        long time = question.getTimeStamp();
         long currentTime = System.currentTimeMillis();
         return time - currentTime;
-//        return 10 * 1000;
     }
 
     private void moveToQuestion() {

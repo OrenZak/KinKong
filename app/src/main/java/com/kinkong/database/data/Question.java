@@ -13,10 +13,15 @@ public class Question {
     public int correct_answer;
     public List<Long> answers_count;
     public List<String> answers;
+    public int prize;
 
     public Question() {
     }
 
+
+    public int getPrize() {
+        return prize;
+    }
 
     public String getVideoUrl() {
         return video_url;
