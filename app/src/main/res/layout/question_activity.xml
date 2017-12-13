@@ -1,80 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/blue_gradient"
-    tools:context="com.kinkong.QuestionActivity"
-    android:padding="10dp">
+    android:orientation="vertical"
+    tools:context="com.kinkong.QuestionActivity">
 
-    <FrameLayout
+
+    <LinearLayout
         android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-       >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
-        <TextView
-            style="@style/text.White"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
-            android:text="Kin - Kong"
-            android:textSize="25dp" />
+            android:scaleType="centerInside"
+            android:src="@drawable/kk_logo_small"
+            android:paddingBottom="15dp"/>
+
+        <com.kinkong.CountDownShortView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp" />
+
 
         <TextView
             style="@style/text.White"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="What is the meaning of life?"
-            android:textSize="25dp" />
+            android:paddingBottom="20dp"
+            android:text="@string/question"
+            />
+
+        <TextView
+            android:id="@+id/question"
+            style="@style/text.White.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/title_big" />
+
+    </LinearLayout>
 
 
-
-    </FrameLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:scaleType="centerInside"
+        android:src="@drawable/white_flower_full" />
 
     <LinearLayout
         android:id="@+id/questions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="vertical"
-        android:padding="20dp"
-        >
+        android:padding="20dp">
 
         <com.kinkong.AnswerView
             android:id="@+id/answer0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:tag="0"
-            />
+            android:paddingBottom="10dp"
+            android:tag="0" />
 
         <com.kinkong.AnswerView
             android:id="@+id/answer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:tag="1"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            />
+            android:paddingBottom="10dp"
+            android:tag="1" />
 
         <com.kinkong.AnswerView
             android:id="@+id/answer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:tag="2"
-            />
+            android:paddingBottom="10dp"
+            android:tag="2" />
 
-
+        <com.kinkong.AnswerView
+            android:id="@+id/answer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:tag="3" />
 
 
     </LinearLayout>
 
 
-
-</LinearLayout>
+</FrameLayout>

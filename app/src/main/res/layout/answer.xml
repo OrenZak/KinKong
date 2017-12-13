@@ -25,6 +25,7 @@
         android:layout_height="@dimen/answer_height"
         android:background="@drawable/answer_ratio"
         android:textColor="@drawable/answer_text_color"
+        android:clickable="false"
          />
 
 </FrameLayout>

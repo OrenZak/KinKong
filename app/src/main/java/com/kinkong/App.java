@@ -2,7 +2,11 @@ package com.kinkong;
 
 import android.app.Application;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.kinkong.database.FBDatabase;
+import com.kinkong.database.data.Question;
 
 import kin.sdk.core.KinClient;
 import kin.sdk.core.ServiceProvider;
@@ -30,7 +34,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FBDatabase.getInstance().cacheBasicData();
         createKinClient(NetWorkType.ROPSTEN);
 
     }

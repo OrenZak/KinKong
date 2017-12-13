@@ -5,9 +5,13 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.kinkong.database.FBDatabase;
+import com.kinkong.database.data.Question;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,16 +37,30 @@ public class SplashActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("test_monky.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
         createAccount();
-        if(isFirsTime()) {
-            try {
-                downloadTutorial();
-            } catch (IOException e) {
-                e.printStackTrace();
+        FBDatabase.getInstance().cacheBasicData(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FBDatabase.getInstance().nextQuestion = dataSnapshot.getValue(Question.class);
+                if(isFirsTime()) {
+                    try {
+                        downloadTutorial();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    moveToCountDown();
+                }
             }
-        }
-        else{
-            moveToCountDown();
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     private void createAccount() {

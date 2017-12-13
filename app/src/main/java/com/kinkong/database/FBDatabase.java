@@ -23,29 +23,13 @@ public class FBDatabase {
 
     private FBDatabase() {}
 
-    public void cacheBasicData() {
+    public void cacheBasicData(final ValueEventListener valueEventListener) {
         getNextQuestion(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() != null) {
                     nextQuestionNum = dataSnapshot.getValue(Integer.class);
-                    cacheQuestionAt(nextQuestionNum);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void cacheQuestionAt(int index) {
-        getQuestionAt(index, new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null) {
-                    nextQuestion = dataSnapshot.getValue(Question.class);
+                    getQuestionAt(nextQuestionNum, valueEventListener);
                 }
             }
 

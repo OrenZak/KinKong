@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
@@ -13,33 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kin.sdk.core.KinAccount;
-import kin.sdk.core.KinClient;
 
 public class QuestionActivity extends AppCompatActivity {
 
     private Question question;
     private KinAccount account;
+    private static final int DURATION_SECONDS = 10;
+    private boolean isWinner;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, QuestionActivity.class);
     }
 
-    List<AnswerView> answers = new ArrayList<>(3);
+    List<AnswerView> answers = new ArrayList<>(4);
     View.OnClickListener clickListener = view -> {
         AnswerView answerView = (AnswerView) view;
         answerView.setSelected(true);
         disableClicks();
         Object tag = view.getTag();
-        sendAnswer(Integer.parseInt((String)tag));
-
-        //TODO wait for timer
-        view.postDelayed(() -> setVotings(), 3000);
+        sendAnswer(Integer.parseInt((String) tag));
     };
 
     private void sendAnswer(int answerIndex) {
-        if(answerIndex == question.correct_answer){
+        isWinner = answerIndex == question.correct_answer;
+        if (isWinner) {
             FBDatabase.getInstance().setWinner(getPublicAddress());
-        } else{
+        } else {
             FBDatabase.getInstance().setAnswer(answerIndex);
         }
     }
@@ -49,15 +49,21 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void setVotings() {
-        answers.get(0).setVotingRatio(0f);
-        answers.get(1).setVotingRatio(0.4f);
-        answers.get(2).setVotingRatio(1);
+        List<Long> answers_count = question.answers_count;
+        float sum = 0;
+        for (Long count : answers_count) {
+            sum += count;
+        }
+        for (int i = 0; i < answers_count.size(); i++) {
+            float ratio = (float) (answers_count.get(i)) / sum;
+            answers.get(i).setVotingRatio(ratio);
+        }
     }
 
     private void disableClicks() {
-        answers.get(0).setOnClickListener(null);
-        answers.get(1).setOnClickListener(null);
-        answers.get(2).setOnClickListener(null);
+        for (AnswerView answerView : answers) {
+            answerView.setOnClickListener(null);
+        }
     }
 
 
@@ -68,20 +74,33 @@ public class QuestionActivity extends AppCompatActivity {
         answers.add(findViewById(R.id.answer0));
         answers.add(findViewById(R.id.answer1));
         answers.add(findViewById(R.id.answer2));
+        answers.add(findViewById(R.id.answer3));
 
-        account = ((App)getApplication()).getKinClient().getAccount();
+        account = ((App) getApplication()).getKinClient().getAccount();
         question = FBDatabase.getInstance().nextQuestion;
-        initAnswers();
+        initViews();
+        startCountDown();
     }
 
-    private void initAnswers() {
-        answers.get(0).setAnswer("A." + " answer is ABBA");
-        answers.get(1).setAnswer("B." + " answer is baby");
-        answers.get(2).setAnswer("C." + " answer is cat");
+    private void startCountDown() {
+        CountDownShortView countDownShortView = findViewById(R.id.counter);
+        countDownShortView.setListener(() -> {
+            disableClicks();
+            setVotings();
+        });
+        countDownShortView.startCount(DURATION_SECONDS * 1000);
+    }
 
-        answers.get(0).setOnClickListener(clickListener);
-        answers.get(1).setOnClickListener(clickListener);
-        answers.get(2).setOnClickListener(clickListener);
+    private void initViews() {
+        TextView questionTextView = findViewById(R.id.question);
+        questionTextView.setText(question.getQuestion());
+
+        List<String> answersStrArray = question.answers;
+        for (int i = 0; i < answers.size(); i++) {
+            AnswerView answerView = answers.get(i);
+            answerView.setAnswer(answersStrArray.get(i));
+            answerView.setOnClickListener(clickListener);
+        }
     }
 
 
