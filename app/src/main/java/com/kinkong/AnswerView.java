@@ -11,14 +11,7 @@ import android.widget.TextView;
 
 public class AnswerView extends FrameLayout {
 
-    interface IQuestionListener {
-        void onAnswer();
-    }
-
-
-    IQuestionListener listener;
-    TextView answer, voting;
-
+    private TextView answer, voting;
 
     public AnswerView(Context context) {
         super(context, null);
@@ -36,8 +29,6 @@ public class AnswerView extends FrameLayout {
     }
 
     private void init(Context context) {
-
-
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.answer, this, true);
@@ -69,9 +60,4 @@ public class AnswerView extends FrameLayout {
         voting.setLayoutParams(layoutParams);
         voting.invalidate();
     }
-
-    public void setListener(IQuestionListener listener) {
-        this.listener = listener;
-    }
-
 }

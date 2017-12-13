@@ -51,16 +51,13 @@ public class CountDownView extends LinearLayout {
     public CountDownView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
-        factory = new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                TextView text = new TextView(getContext());
-                text.setGravity(Gravity.CENTER);
-                text.setTextSize(30);
-                text.setTextColor(Color.WHITE);
-                text.setTypeface(Typeface.DEFAULT_BOLD);
-                return text;
-            }
+        factory = () -> {
+            TextView text = new TextView(getContext());
+            text.setGravity(Gravity.CENTER);
+            text.setTextSize(30);
+            text.setTextColor(Color.WHITE);
+            text.setTypeface(Typeface.DEFAULT_BOLD);
+            return text;
         };
     }
 
@@ -91,9 +88,9 @@ public class CountDownView extends LinearLayout {
     }
 
 
-    public void startCountSec(long longSeconds) {
-        updateTime(longSeconds);
-        countDownTimer = new CountDownTimer(longSeconds * 1000, 1000) {
+    public void startCount(long miliSeconds) {
+        updateTime(miliSeconds);
+        countDownTimer = new CountDownTimer(miliSeconds, 1000) {
 
             @Override
             public void onTick(long l) {

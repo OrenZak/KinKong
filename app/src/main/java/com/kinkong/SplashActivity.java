@@ -36,13 +36,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void downloadTutorial() throws IOException {
+        //TODO add show once
         if(kinTutorialFile.exists()){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    moveToTutorial();
-                }
-            }, 500);
+            new Handler().postDelayed(() -> moveToTutorial(), 500);
 
         }
         else {
