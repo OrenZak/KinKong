@@ -47,7 +47,8 @@
                 android:layout_gravity="center"
                 android:padding="15dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/sand_clock" />
+                android:background="#9955aaff"
+                />
 
             <TextView
                 style="@style/text.White"

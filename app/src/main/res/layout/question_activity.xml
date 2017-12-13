@@ -1,40 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.kinkong.CountDownActivity">
+    android:background="@drawable/blue_gradient"
+    tools:context="com.kinkong.QuestionActivity"
+    android:padding="10dp">
 
     <FrameLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
-        android:background="@drawable/blue_gradient"
-        android:padding="10dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+       >
 
         <TextView
             style="@style/text.White"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
-            android:text="Question"
+            android:text="Kin - Kong"
+            android:textSize="25dp" />
+
+        <TextView
+            style="@style/text.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="What is the meaning of life?"
             android:textSize="25dp" />
 
 
 
     </FrameLayout>
 
-
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/questions"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_gravity="bottom"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+
+        <com.kinkong.AnswerView
+            android:id="@+id/answer0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tag="0"
+            />
+
+        <com.kinkong.AnswerView
+            android:id="@+id/answer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tag="1"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            />
+
+        <com.kinkong.AnswerView
+            android:id="@+id/answer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tag="2"
+            />
 
 
-    </FrameLayout>
 
-</FrameLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

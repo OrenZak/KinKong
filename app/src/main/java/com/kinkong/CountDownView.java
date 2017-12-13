@@ -29,16 +29,13 @@ public class CountDownView extends LinearLayout {
     CountDownTimer countDownTimer;
     ICountDownListener listener;
 
-    ViewSwitcher.ViewFactory factory = new ViewSwitcher.ViewFactory() {
-        @Override
-        public View makeView() {
-            TextView text = new TextView(getContext());
-            text.setGravity(Gravity.CENTER);
-            text.setTextSize(30);
-            text.setTextColor(Color.WHITE);
-            text.setTypeface(Typeface.DEFAULT_BOLD);
-            return text;
-        }
+    ViewSwitcher.ViewFactory factory = (ViewSwitcher.ViewFactory) () -> {
+        TextView text = new TextView(getContext());
+        text.setGravity(Gravity.CENTER);
+        text.setTextSize(30);
+        text.setTextColor(Color.WHITE);
+        text.setTypeface(Typeface.DEFAULT_BOLD);
+        return text;
     };
 
     public CountDownView(Context context) {
@@ -54,6 +51,17 @@ public class CountDownView extends LinearLayout {
     public CountDownView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+        factory = new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                TextView text = new TextView(getContext());
+                text.setGravity(Gravity.CENTER);
+                text.setTextSize(30);
+                text.setTextColor(Color.WHITE);
+                text.setTypeface(Typeface.DEFAULT_BOLD);
+                return text;
+            }
+        };
     }
 
     private void init(Context context) {
@@ -63,12 +71,12 @@ public class CountDownView extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.countdown_long, this, true);
-        txtArray.add((TextSwitcher) view.findViewById(R.id.hour0));
-        txtArray.add((TextSwitcher) view.findViewById(R.id.hour1));
-        txtArray.add((TextSwitcher) view.findViewById(R.id.min0));
-        txtArray.add((TextSwitcher) view.findViewById(R.id.min1));
-        txtArray.add((TextSwitcher) view.findViewById(R.id.sec0));
-        txtArray.add((TextSwitcher) view.findViewById(R.id.sec1));
+        txtArray.add(view.findViewById(R.id.hour0));
+        txtArray.add(view.findViewById(R.id.hour1));
+        txtArray.add(view.findViewById(R.id.min0));
+        txtArray.add(view.findViewById(R.id.min1));
+        txtArray.add(view.findViewById(R.id.sec0));
+        txtArray.add(view.findViewById(R.id.sec1));
 
         for (TextSwitcher textswitcher : txtArray) {
             textswitcher.setFactory(factory);

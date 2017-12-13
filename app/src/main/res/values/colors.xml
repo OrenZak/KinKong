@@ -9,4 +9,5 @@
 
     <color name="blue">#0055bb</color>
     <color name="blue_pale">#3399bb</color>
+    <color name="answer_selected">#777799dd</color>
 </resources>

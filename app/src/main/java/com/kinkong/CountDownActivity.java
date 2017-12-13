@@ -26,7 +26,7 @@ public class CountDownActivity extends AppCompatActivity {
                 moveToQuestion();
             }
         });
-        countDownView.startCountSec(259215);
+        countDownView.startCountSec(86400);
     }
 
     private void moveToQuestion() {
