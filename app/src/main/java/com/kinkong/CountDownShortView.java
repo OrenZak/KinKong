@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CountDownView extends LinearLayout {
+public class CountDownShortView extends LinearLayout {
 
     interface ICountDownListener {
         void onComplete();
     }
 
     List<TextSwitcher> txtArray = new ArrayList<>();
-    int hour0 = -1, hour1 = -1, minute0 = -1, minute1 = -1, seconds0 = -1, seconds1 = -1;
+    int seconds0 = -1, seconds1 = -1;
     CountDownTimer countDownTimer;
     ICountDownListener listener;
 
@@ -34,23 +34,23 @@ public class CountDownView extends LinearLayout {
         TextView textView = new TextView(getContext());
         textView.setGravity(Gravity.CENTER);
         //TODO need to fix this not const
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 4);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 2);
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         return textView;
     };
 
-    public CountDownView(Context context) {
+    public CountDownShortView(Context context) {
         super(context, null);
         init(context);
     }
 
-    public CountDownView(Context context, @Nullable AttributeSet attrs) {
+    public CountDownShortView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public CountDownView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CountDownShortView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -61,11 +61,7 @@ public class CountDownView extends LinearLayout {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.countdown_long, this, true);
-        txtArray.add(view.findViewById(R.id.hour0));
-        txtArray.add(view.findViewById(R.id.hour1));
-        txtArray.add(view.findViewById(R.id.min0));
-        txtArray.add(view.findViewById(R.id.min1));
+        View view = inflater.inflate(R.layout.countdown_short, this, true);
         txtArray.add(view.findViewById(R.id.sec0));
         txtArray.add(view.findViewById(R.id.sec1));
 
@@ -82,13 +78,13 @@ public class CountDownView extends LinearLayout {
     }
 
 
-    public void startCount(long miliSeconds) {
+    public void startCount(int miliSeconds) {
         updateTime(miliSeconds);
         countDownTimer = new CountDownTimer(miliSeconds, 1000) {
 
             @Override
             public void onTick(long l) {
-                updateTime(l / 1000);
+                updateTime((int)l / 1000);
             }
 
             @Override
@@ -106,48 +102,18 @@ public class CountDownView extends LinearLayout {
         txtArray.get(index).setText(String.valueOf(digit));
     }
 
-    private void updateTime(long longSeconds) {
-        int hours = (int) longSeconds / 3600;
-        int remainder = (int) longSeconds - hours * 3600;
-        int minutes = remainder / 60;
-        remainder = remainder - minutes * 60;
-        int seconds = remainder;
-
-        int h0 = hours / 10;
-        int h1 = hours - h0 * 10;
-
-        if (h0 != hour0) {
-            hour0 = h0;
-            updateDigit(0, hour0);
-        }
-        if (h1 != hour1) {
-            hour1 = h1;
-            updateDigit(1, hour1);
-        }
-
-        int m0 = minutes / 10;
-
-        if (m0 != minute0) {
-            minute0 = m0;
-            updateDigit(2, minute0);
-        }
-        int m1 = minutes - m0 * 10;
-        if (m1 != minute1) {
-            minute1 = m1;
-            updateDigit(3, minute1);
-        }
-
+    private void updateTime(int seconds) {
         int s0 = seconds / 10;
 
         if (s0 != seconds0) {
             seconds0 = s0;
-            updateDigit(4, seconds0);
+            updateDigit(0, seconds0);
         }
 
         int s1 = seconds - s0 * 10;
         if (s1 != seconds1) {
             seconds1 = s1;
-            updateDigit(5, seconds1);
+            updateDigit(1, seconds1);
         }
     }
 
