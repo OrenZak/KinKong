@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+
+    <TextView
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/answer_height"
+        android:background="@drawable/answer_bg_drawable"
+        android:gravity="left"
+        style="@style/text.Blue"
+        android:paddingStart="15dp"
+        android:textColor="@drawable/answer_text_color"
+        android:text="some answer with very long line" />
+
+    <TextView
+        android:id="@+id/voting"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/answer_height"
+        android:background="@drawable/answer_ratio"
+        android:textColor="@drawable/answer_text_color"
+         />
+
+</FrameLayout>
+
