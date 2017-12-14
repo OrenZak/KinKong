@@ -11,5 +11,6 @@
     <color name="blue_pale">#00ccee</color>
     <color name="answer_selected">#012dae</color>
     <color name="answer_ratio">#99005fff</color>
+    <color name="wrong_answer_ratio">@color/blue_pale</color>
     <color name="grey">#808080</color>
 </resources>

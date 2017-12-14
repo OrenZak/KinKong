@@ -65,14 +65,11 @@ public class FBDatabase {
     }
 
     public void updateNextQuestion() {
-        DatabaseReference nextQuestion = database.getReference("next_question/");
-        upCount(nextQuestion);
-        getQuestionAt(++nextQuestionNum, new ValueEventListener() {
+        ++nextQuestionNum;
+        getQuestionAt(nextQuestionNum, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    setNextQuestion(dataSnapshot.getValue(Question.class));
-                }
+                setNextQuestion(dataSnapshot.getValue(Question.class));
             }
 
             @Override
@@ -80,6 +77,7 @@ public class FBDatabase {
 
             }
         });
+
     }
 
     private void upCount(DatabaseReference postRef) {
@@ -102,6 +100,4 @@ public class FBDatabase {
             }
         });
     }
-
-
 }
