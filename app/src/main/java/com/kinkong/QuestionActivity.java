@@ -20,7 +20,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private Question question;
     private KinAccount account;
-    private static final int DURATION_SECONDS = 10;
+    private static final int DURATION_SECONDS = 5;
     private int answerIndex = -1;
 
     public static Intent getIntent(Context context) {

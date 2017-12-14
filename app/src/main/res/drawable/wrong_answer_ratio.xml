@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/wrong_answer_ratio" />
+    <stroke
+        android:width="1dp"
+        android:color="#00000000" />
+    <corners
+        android:bottomLeftRadius="@dimen/answer_corner"
+        android:bottomRightRadius="0dp"
+        android:topLeftRadius="@dimen/answer_corner"
+        android:topRightRadius="0dp" />
+    <padding
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp" />
+</shape>
