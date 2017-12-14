@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 import com.kinkong.database.FBDatabase;
@@ -83,13 +84,18 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void animateClose() {
         View view = findViewById(R.id.close_button);
+        view.setAlpha(0);
         view.setVisibility(View.VISIBLE);
+        view.animate().alpha(1).setDuration(1000).rotation(360).setStartDelay(3000).setInterpolator(new AccelerateDecelerateInterpolator()).start();
     }
 
     private void updateLoser() {
         findViewById(R.id.question_layout).setVisibility(View.GONE);
+        View view = findViewById(R.id.try_next_time_text);
+        view.setAlpha(0);
         findViewById(R.id.loser_layout).setVisibility(View.VISIBLE);
         playAudio(false);
+        view.animate().alpha(1).setDuration(1000).setStartDelay(1000).start();
     }
     
     private void deselectAnswer() {
@@ -100,8 +106,12 @@ public class QuestionActivity extends AppCompatActivity {
     
     private void updateWinner() {
         findViewById(R.id.question_layout).setVisibility(View.GONE);
+        View bg = findViewById(R.id.winner_bg);
+        bg.setAlpha(0);
+        bg.setY(bg.getY() - 200);
         findViewById(R.id.winner_layout).setVisibility(View.VISIBLE);
         playAudio(true);
+        bg.animate().alpha(1).translationYBy(200).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(4000).start();
     }
 
     private void playAudio(boolean isWin) {
@@ -122,7 +132,7 @@ public class QuestionActivity extends AppCompatActivity {
         return account.getPublicAddress();
     }
 
-    private void setVotings() {
+    private void animateVotings() {
         List<Long> answers_count = question.answers_count;
         float sum = 0;
         for (Long count : answers_count) {
@@ -130,7 +140,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
         for (int i = 0; i < answers_count.size(); i++) {
             float ratio = (float) (answers_count.get(i)) / sum;
-            answers.get(i).setVotingRatio(ratio);
+            answers.get(i).animateVoting(ratio);
         }
     }
 
@@ -160,7 +170,7 @@ public class QuestionActivity extends AppCompatActivity {
             updateLoser();
         }
         FBDatabase.getInstance().updateNextQuestion();
-        animateVoting();
+        animateVotings();
     }
 
     private void markColors() {
@@ -171,10 +181,6 @@ public class QuestionActivity extends AppCompatActivity {
                 answers.get(i).markRatio();
             }
         }
-    }
-
-    private void animateVoting() {
-        setVotings();
     }
 
     private void initViews() {
