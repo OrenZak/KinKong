@@ -72,7 +72,7 @@ public class CountDownActivity extends AppCompatActivity {
     }
 
     private void moveToQuestion() {
-        startActivity(QuestionActivity.getIntent(this));
+        startActivity(QuestionVideoActivity.getIntent(this));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

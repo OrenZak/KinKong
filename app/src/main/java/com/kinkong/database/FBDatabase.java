@@ -7,6 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+
 import com.kinkong.database.data.Question;
 
 public class FBDatabase {
@@ -41,6 +42,10 @@ public class FBDatabase {
         });
     }
 
+    public void setNextQuestion(Question question) {
+        this.nextQuestion = question;
+    }
+
     public void getNextQuestion(ValueEventListener valueEventListener) {
         database.getReference("next_question").addListenerForSingleValueEvent(valueEventListener);
     }
@@ -66,7 +71,7 @@ public class FBDatabase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    FBDatabase.this.nextQuestion = dataSnapshot.getValue(Question.class);
+                    setNextQuestion(dataSnapshot.getValue(Question.class));
                 }
             }
 
@@ -97,4 +102,6 @@ public class FBDatabase {
             }
         });
     }
+
+
 }

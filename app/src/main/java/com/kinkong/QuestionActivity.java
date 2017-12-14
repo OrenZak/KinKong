@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class QuestionActivity extends AppCompatActivity {
         return new Intent(context, QuestionActivity.class);
     }
 
+
     List<AnswerView> answers = new ArrayList<>(4);
     View.OnClickListener clickListener = view -> {
         AnswerView answerView = (AnswerView) view;
@@ -34,6 +36,21 @@ public class QuestionActivity extends AppCompatActivity {
         answerIndex = Integer.parseInt((String) view.getTag());
         sendAnswer();
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.question_activity);
+        answers.add(findViewById(R.id.answer0));
+        answers.add(findViewById(R.id.answer1));
+        answers.add(findViewById(R.id.answer2));
+        answers.add(findViewById(R.id.answer3));
+
+        account = ((App) getApplication()).getKinClient().getAccount();
+        question = FBDatabase.getInstance().nextQuestion;
+        initViews();
+        startCountDown();
+    }
 
     private void sendAnswer() {
         if (isWinner()) {
@@ -83,21 +100,6 @@ public class QuestionActivity extends AppCompatActivity {
         for (AnswerView answerView : answers) {
             answerView.setOnClickListener(null);
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.question_activity);
-        answers.add(findViewById(R.id.answer0));
-        answers.add(findViewById(R.id.answer1));
-        answers.add(findViewById(R.id.answer2));
-        answers.add(findViewById(R.id.answer3));
-
-        account = ((App) getApplication()).getKinClient().getAccount();
-        question = FBDatabase.getInstance().nextQuestion;
-        initViews();
-        startCountDown();
     }
 
     private void startCountDown() {
