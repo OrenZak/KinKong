@@ -27,8 +27,6 @@ abstract class BaseVideoActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         textureView = findViewById(R.id.texture_view);
-
-
     }
 
     protected void prepareMediaPlayer() {

@@ -29,7 +29,7 @@ public class CountDownActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
         question = FBDatabase.getInstance().nextQuestion;
-        kinClient = ((App)getApplication()).getKinClient();
+        kinClient = ((App) getApplication()).getKinClient();
 
         CountDownView countDownView = findViewById(R.id.countdown_view);
         countDownView.setListener(this::moveToQuestion);
@@ -68,8 +68,7 @@ public class CountDownActivity extends AppCompatActivity {
     private long getCountDownTime() {
         long time = question.getTimeStamp();
         long currentTime = System.currentTimeMillis();
-        //return time - currentTime;
-        return 5* 1000;
+        return time - currentTime;
     }
 
     private void moveToQuestion() {
@@ -83,7 +82,7 @@ public class CountDownActivity extends AppCompatActivity {
     }
 
     public void openTutorial(View view) {
-        startActivity(KinTutorial.getIntent(this));
+        startActivity(KinTutorial.getIntent(this, false));
         finish();
     }
 }

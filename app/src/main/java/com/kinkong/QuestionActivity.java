@@ -43,7 +43,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isWinner(){
+    private boolean isWinner() {
         return answerIndex == question.correct_answer;
     }
 
@@ -105,12 +105,13 @@ public class QuestionActivity extends AppCompatActivity {
         countDownShortView.setListener(() -> {
             disableClicks();
             animateClose();
-            if(isWinner()){
+            if (isWinner()) {
                 updateWinner();
-            }else{
+            } else {
                 updateLoser();
             }
-            countDownShortView.postDelayed(() -> setVotings(), 5000);
+            FBDatabase.getInstance().updateNextQuestion();
+            countDownShortView.postDelayed(() -> setVotings(), 2000);
         });
         countDownShortView.startCount(DURATION_SECONDS * 1000);
     }

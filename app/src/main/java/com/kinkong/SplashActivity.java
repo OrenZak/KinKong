@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences(Constants.MAIN_SHAEREDPREF, MODE_PRIVATE);
-        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("test_monky.mp4");
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("kin_tutorial2.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
         createAccount();
         FBDatabase.getInstance().cacheBasicData(new ValueEventListener() {
@@ -94,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void moveToTutorial() {
-        startActivity(KinTutorial.getIntent(this));
+        startActivity(KinTutorial.getIntent(this,true));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

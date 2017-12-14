@@ -10,8 +10,11 @@ import java.io.File;
 
 public class KinTutorial extends BaseVideoActivity {
 
-    public static Intent getIntent(Context context){
-        return  new Intent(context, KinTutorial.class);
+    private static final String IS_FROM_SPLASH = "is_from_splash";
+    private boolean isFromSplash = false;
+
+    public static Intent getIntent(Context context, boolean  isFromSplash){
+        return  new Intent(context, KinTutorial.class).putExtra(IS_FROM_SPLASH, isFromSplash);
     }
 
     @Override
@@ -33,6 +36,7 @@ public class KinTutorial extends BaseVideoActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_video_base);
         super.onCreate(savedInstanceState);
+        isFromSplash = getIntent().getBooleanExtra(IS_FROM_SPLASH, false);
         findViewById(R.id.skip).setOnClickListener(v -> moveToCountDown());
     }
 
@@ -50,5 +54,8 @@ public class KinTutorial extends BaseVideoActivity {
 
     private void moveToCountDown() {
         startActivity(CountDownActivity.getIntent(this));
+        if(isFromSplash) {
+            finish();
+        }
     }
 }
