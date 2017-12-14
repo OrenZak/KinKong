@@ -1,5 +1,6 @@
 package com.kinkong;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -8,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -15,6 +17,8 @@ import android.widget.TextView;
 public class AnswerView extends FrameLayout {
 
     private TextView answer, voting;
+    private static final int MAX_ANIM = 3000;
+    private static final int MIN_ANIM = 500;
 
     public AnswerView(Context context) {
         super(context, null);
@@ -49,19 +53,28 @@ public class AnswerView extends FrameLayout {
         answer.setSelected(selected);
     }
 
-    public void setVotingRatio(float ratio) {
-        float size = answer.getWidth() * ratio;
-        float minSize = getResources().getDimension(R.dimen.answer_corner);
-        float maxSize = size - minSize;
-        if (size < minSize) {
-            size = minSize;
-        } else if (size > maxSize) {
-            size = maxSize;
+    public void animateVoting(float ratio) {
+        int endWidth = (int) (answer.getWidth() * ratio);
+        int minSize = (int) getResources().getDimension(R.dimen.answer_corner);
+        int maxSize = endWidth - minSize;
+        if (endWidth < minSize) {
+            endWidth = minSize;
+        } else if (endWidth > maxSize) {
+            endWidth = maxSize;
         }
-        FrameLayout.LayoutParams layoutParams = (LayoutParams) voting.getLayoutParams();
-        layoutParams.width = (int) size;
-        voting.setLayoutParams(layoutParams);
-        voting.invalidate();
+        int startWidth = (int) minSize;
+
+        ValueAnimator anim = ValueAnimator.ofInt(startWidth, endWidth);
+        anim.addUpdateListener(valueAnimator -> {
+            int val = (Integer) valueAnimator.getAnimatedValue();
+            LayoutParams layoutParams = (LayoutParams) voting.getLayoutParams();
+            layoutParams.width = val;
+            voting.setLayoutParams(layoutParams);
+        });
+        long duration = (long) (ratio * MAX_ANIM + MIN_ANIM + Math.random() * MAX_ANIM / 2);
+        anim.setDuration(duration);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.start();
     }
 
     public void markCorrect() {
