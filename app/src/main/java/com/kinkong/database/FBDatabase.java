@@ -12,7 +12,7 @@ import com.kinkong.database.data.Question;
 public class FBDatabase {
     private static final FBDatabase ourInstance = new FBDatabase();
 
-    private  FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public int nextQuestionNum;
     public Question nextQuestion;
@@ -21,13 +21,14 @@ public class FBDatabase {
         return ourInstance;
     }
 
-    private FBDatabase() {}
+    private FBDatabase() {
+    }
 
     public void cacheBasicData(final ValueEventListener valueEventListener) {
         getNextQuestion(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null) {
+                if (dataSnapshot.getValue() != null) {
                     nextQuestionNum = dataSnapshot.getValue(Integer.class);
                     getQuestionAt(nextQuestionNum, valueEventListener);
                 }
@@ -48,10 +49,6 @@ public class FBDatabase {
         database.getReference("questions").child(index + "").addListenerForSingleValueEvent(valueEventListener);
     }
 
-    public void getPrize(ValueEventListener valueEventListener) {
-        database.getReference("questions").child(nextQuestionNum + "").child("prize").addListenerForSingleValueEvent(valueEventListener);
-    }
-
     public void setWinner(String publicAddress) {
         database.getReference("questions").child(nextQuestionNum + "").child("winners").push().setValue(publicAddress);
 
@@ -62,11 +59,29 @@ public class FBDatabase {
         upCount(answerCount);
     }
 
+    public void updateNextQuestion() {
+        DatabaseReference nextQuestion = database.getReference("next_question/");
+        upCount(nextQuestion);
+        getQuestionAt(++nextQuestionNum, new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    FBDatabase.this.nextQuestion = dataSnapshot.getValue(Question.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void upCount(DatabaseReference postRef) {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                if(mutableData.getValue() == null) {
+                if (mutableData.getValue() == null) {
                     mutableData.setValue(new Integer(1));
                 } else {
                     int count = mutableData.getValue(Integer.class);
