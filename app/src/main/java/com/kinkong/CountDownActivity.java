@@ -2,9 +2,12 @@ package com.kinkong;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kinkong.database.FBDatabase;
@@ -23,6 +26,9 @@ public class CountDownActivity extends AppCompatActivity {
 
     private KinClient kinClient;
     private Question question;
+    private Animatable animatable;
+
+    private Thread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,42 @@ public class CountDownActivity extends AppCompatActivity {
 
             }
         });
+
+        ImageView timer = findViewById(R.id.timer);
+        animatable = ((Animatable) timer.getDrawable());
+
+        startThreadAnimation();
+    }
+
+    private void startThreadAnimation() {
+        thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                while(true) {
+                    if(!animatable.isRunning()) {
+                        startAnimation();
+                    }
+                }
+            }
+        };
+        thread.start();
+    }
+
+    private void startAnimation() {
+        runOnUiThread(() -> animatable.start());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startThreadAnimation();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        thread.interrupt();
     }
 
     private void updatePrize() {
