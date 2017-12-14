@@ -2,6 +2,7 @@ package com.kinkong;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,11 +22,11 @@ public class QuestionActivity extends AppCompatActivity {
     private KinAccount account;
     private static final int DURATION_SECONDS = 10;
     private int answerIndex = -1;
+    private MediaPlayer mediaPlayer;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, QuestionActivity.class);
     }
-
 
     List<AnswerView> answers = new ArrayList<>(4);
     View.OnClickListener clickListener = view -> {
@@ -62,6 +63,12 @@ public class QuestionActivity extends AppCompatActivity {
         startCountDown();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
+    }
+
     private void sendAnswer() {
         if (isWinner()) {
             FBDatabase.getInstance().setWinner(getPublicAddress());
@@ -82,17 +89,32 @@ public class QuestionActivity extends AppCompatActivity {
     private void updateLoser() {
         findViewById(R.id.question_layout).setVisibility(View.GONE);
         findViewById(R.id.loser_layout).setVisibility(View.VISIBLE);
+        playAudio(false);
     }
-
-    private void unSelectAnswer() {
+    
+    private void deselectAnswer() {
         for (AnswerView answerView : answers) {
             answerView.setSelected(false);
         }
     }
-
+    
     private void updateWinner() {
         findViewById(R.id.question_layout).setVisibility(View.GONE);
         findViewById(R.id.winner_layout).setVisibility(View.VISIBLE);
+        playAudio(true);
+    }
+
+    private void playAudio(boolean isWin) {
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), isWin ? R.raw.win : R.raw.fail);
+        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+        mediaPlayer.setOnCompletionListener(mp -> releaseMediaPlayer());
+    }
+
+    private void releaseMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
 
@@ -128,7 +150,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void onCountDownComplete() {
         disableClicks();
-        unSelectAnswer();
+        deselectAnswer();
         deselectBeside(question.correct_answer);
         animateClose();
         markColors();
