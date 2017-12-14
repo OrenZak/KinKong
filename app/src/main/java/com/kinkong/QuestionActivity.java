@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private Question question;
     private KinAccount account;
-    private static final int DURATION_SECONDS = 5;
+    private static final int DURATION_SECONDS = 10;
     private int answerIndex = -1;
 
     public static Intent getIntent(Context context) {
@@ -34,8 +33,19 @@ public class QuestionActivity extends AppCompatActivity {
         answerView.setSelected(true);
         disableClicks();
         answerIndex = Integer.parseInt((String) view.getTag());
+        deselectBeside(answerIndex);
         sendAnswer();
     };
+
+    private void deselectBeside(int index) {
+        for (int i = 0; i < answers.size(); i++) {
+            if (i != index) {
+                answers.get(i).setAlpha(0.7f);
+            } else {
+                answers.get(i).setAlpha(1f);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +84,12 @@ public class QuestionActivity extends AppCompatActivity {
         findViewById(R.id.loser_layout).setVisibility(View.VISIBLE);
     }
 
+    private void unSelectAnswer() {
+        for (AnswerView answerView : answers) {
+            answerView.setSelected(false);
+        }
+    }
+
     private void updateWinner() {
         findViewById(R.id.question_layout).setVisibility(View.GONE);
         findViewById(R.id.winner_layout).setVisibility(View.VISIBLE);
@@ -105,17 +121,38 @@ public class QuestionActivity extends AppCompatActivity {
     private void startCountDown() {
         CountDownShortView countDownShortView = findViewById(R.id.counter);
         countDownShortView.setListener(() -> {
-            disableClicks();
-            animateClose();
-            if (isWinner()) {
-                updateWinner();
-            } else {
-                updateLoser();
-            }
-            FBDatabase.getInstance().updateNextQuestion();
-            countDownShortView.postDelayed(() -> setVotings(), 2000);
+            onCountDownComplete();
         });
         countDownShortView.startCount(DURATION_SECONDS * 1000);
+    }
+
+    private void onCountDownComplete() {
+        disableClicks();
+        unSelectAnswer();
+        deselectBeside(question.correct_answer);
+        animateClose();
+        markColors();
+        if (isWinner()) {
+            updateWinner();
+        } else {
+            updateLoser();
+        }
+        FBDatabase.getInstance().updateNextQuestion();
+        animateVoting();
+    }
+
+    private void markColors() {
+        for (int i = 0; i < answers.size(); i++) {
+            if (i == question.correct_answer) {
+                answers.get(i).markCorrect();
+            } else {
+                answers.get(i).markRatio();
+            }
+        }
+    }
+
+    private void animateVoting() {
+        setVotings();
     }
 
     private void initViews() {

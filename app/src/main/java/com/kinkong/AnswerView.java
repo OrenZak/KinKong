@@ -1,7 +1,10 @@
 package com.kinkong;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,4 +63,17 @@ public class AnswerView extends FrameLayout {
         voting.setLayoutParams(layoutParams);
         voting.invalidate();
     }
+
+    public void markCorrect() {
+        Drawable background = voting.getBackground();
+        GradientDrawable gradientDrawable = (GradientDrawable) background;
+        gradientDrawable.setColor(ContextCompat.getColor(getContext(), R.color.blue_correct));
+    }
+
+    public void markRatio() {
+        Drawable background = voting.getBackground();
+        GradientDrawable gradientDrawable = (GradientDrawable) background;
+        gradientDrawable.setColor(ContextCompat.getColor(getContext(), R.color.answer_ratio));
+    }
+
 }
