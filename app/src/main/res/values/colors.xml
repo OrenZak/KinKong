@@ -9,6 +9,7 @@
     <color name="white_50op">#7effffff</color>
     <color name="blue">#005fff</color>
     <color name="blue_pale">#00ccee</color>
+    <color name="blue_correct">#8800ccee</color>
     <color name="answer_selected">#012dae</color>
     <color name="answer_ratio">#99005fff</color>
     <color name="wrong_answer_ratio">@color/blue_pale</color>
