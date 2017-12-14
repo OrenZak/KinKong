@@ -41,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
         FBDatabase.getInstance().cacheBasicData(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FBDatabase.getInstance().nextQuestion = dataSnapshot.getValue(Question.class);
+                FBDatabase.getInstance().setNextQuestion(dataSnapshot.getValue(Question.class));
                 if(isFirsTime()) {
                     try {
                         downloadTutorial();

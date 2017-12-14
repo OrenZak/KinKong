@@ -18,10 +18,14 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".KinTutorial" android:screenOrientation="portrait"/>
+
         <activity android:name=".CountDownActivity" android:screenOrientation="portrait"/>
         <activity android:name=".QuestionActivity" android:screenOrientation="portrait"/>
         <activity android:name=".AccountInfoActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".KinTutorial" android:screenOrientation="portrait" android:theme="@style/TranslucentDecor"/>
+        <activity android:name=".QuestionVideoActivity" android:screenOrientation="portrait" android:theme="@style/TranslucentDecor"/>
+
     </application>
 
 </manifest>
