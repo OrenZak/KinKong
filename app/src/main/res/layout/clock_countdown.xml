@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
@@ -8,60 +9,62 @@
 
 
     <TextSwitcher
-        android:id="@+id/hour0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:measureAllChildren="false"
-        />
-
-    <TextSwitcher
         android:id="@+id/hour1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:measureAllChildren="false"
-        />
-
-    <TextView
-        style="@style/text.White.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/count_down_font_size_big"
-        android:text=":" />
+        android:visibility="gone" />
 
     <TextSwitcher
-        android:id="@+id/min0"
+        android:id="@+id/hour0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:measureAllChildren="false"
-        />
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/hours_delim"
+        style="@style/text.White.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/counter_delim"
+        android:textSize="@dimen/count_down_font_size_big"
+        android:visibility="gone" />
 
     <TextSwitcher
         android:id="@+id/min1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:measureAllChildren="false"
-        />
-
-    <TextView
-        style="@style/text.White.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/count_down_font_size_big"
-        android:text=":" />
+        android:visibility="gone" />
 
     <TextSwitcher
-        android:id="@+id/sec0"
+        android:id="@+id/min0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:measureAllChildren="false"
-        />
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/min_delim"
+        style="@style/text.White.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/counter_delim"
+        android:textSize="@dimen/count_down_font_size_big"
+        android:visibility="gone" />
 
     <TextSwitcher
         android:id="@+id/sec1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:measureAllChildren="false"
-        />
+        android:measureAllChildren="false" />
+
+    <TextSwitcher
+        android:id="@+id/sec0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:measureAllChildren="false" />
 
 
 </LinearLayout>

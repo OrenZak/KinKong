@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
+            android:onClick="startTutorial"
             android:paddingRight="15dp"
             android:paddingTop="30dp"
-            android:onClick="startTutorial"
             android:src="@drawable/whats_kin_icon" />
 
         <ImageView
@@ -50,12 +50,12 @@
                 android:id="@+id/timer"
                 android:layout_width="80dp"
                 android:layout_height="100dp"
-                android:contentDescription="@null"
                 android:layout_gravity="center_horizontal"
+                android:contentDescription="@null"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:tint="@color/white"
-                android:src="@drawable/avd_clock_timer"/>
+                android:src="@drawable/avd_clock_timer"
+                android:tint="@color/white" />
 
 
             <TextView
@@ -64,42 +64,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/next_question_in"
-                android:textSize="@dimen/title_big"
-                />
+                android:textSize="@dimen/title_big" />
 
-            <com.kinkong.CountDownView
-                android:id="@+id/countdown_view"
+            <com.kinkong.ClockCountDownView
+                android:id="@+id/clock_count_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="10dp" />
-
+                android:padding="10dp"
+                app:hours="true" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/prize_layout"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="74dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="74dp"
             android:orientation="horizontal">
+
             <TextView
                 style="@style/text.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total_prize_is"
-                android:textSize="@dimen/title_big"/>
+                android:textSize="@dimen/title_big" />
 
             <TextView
                 android:id="@+id/prize"
                 style="@style/text.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-               />
-
+                android:paddingLeft="5dp" />
 
 
         </LinearLayout>
@@ -118,9 +116,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
-            android:scaleType="centerInside"
-            android:paddingRight="20dp"
             android:onClick="startAccountInfo"
+            android:paddingRight="20dp"
+            android:scaleType="centerInside"
             android:src="@drawable/enter_icon" />
 
         <LinearLayout
