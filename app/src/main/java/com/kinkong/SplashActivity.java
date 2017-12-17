@@ -31,10 +31,14 @@ public class SplashActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+
+    private static final String MAIN_SHAEREDPREF = "kinkong_sharedpref";
+    private static final String FIRST_TIME = "first_time";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = getSharedPreferences(Constants.MAIN_SHAEREDPREF, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(MAIN_SHAEREDPREF, MODE_PRIVATE);
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("kin_tutorial2.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
         createAccount();
@@ -74,9 +78,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void downloadTutorial() throws IOException {
-        sharedPreferences.edit().putBoolean(Constants.FIRST_TIME,false).apply();
+        sharedPreferences.edit().putBoolean(FIRST_TIME,false).apply();
         if(kinTutorialFile.exists()){
-            new Handler().postDelayed(() -> moveToTutorial(), 1000);
+            new Handler().postDelayed(this::moveToTutorial, 1000);
 
         }
         else {
@@ -109,7 +113,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean isFirsTime() {
-        return sharedPreferences.getBoolean(Constants.FIRST_TIME, true);
+        return sharedPreferences.getBoolean(FIRST_TIME, true);
     }
 
     @Override

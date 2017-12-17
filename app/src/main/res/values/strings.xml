@@ -9,4 +9,12 @@
     <string name="try_next_time">Try Next Time!</string>
     <string name="correct">Correct!</string>
     <string name="you_are_a_rock_star">You are a Rock Star!</string>
+    <string name="private_key">Private Key:</string>
+    <string name="done">Done</string>
+    <string name="enter_a_passphrase">Enter a passphrase</string>
+    <string name="backup_you_account">Backup you Account:</string>
+    <string name="copy">Copy</string>
+    <string name="public_address">Public Address:</string>
+    <string name="what_s_kin">What\'s Kin?</string>
+    <string name="copy">Copy</string>
 </resources>

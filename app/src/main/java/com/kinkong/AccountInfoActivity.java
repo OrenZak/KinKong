@@ -2,6 +2,7 @@ package com.kinkong;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -34,6 +35,10 @@ public class AccountInfoActivity extends BaseActivity {
     private TextView whatsKin;
 
     private KinClient kinClient;
+
+    public static Intent getInent(Context context) {
+        return new Intent(context, AccountInfoActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

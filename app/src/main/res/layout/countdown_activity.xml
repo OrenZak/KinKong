@@ -29,7 +29,7 @@
             android:layout_gravity="top|right"
             android:paddingRight="15dp"
             android:paddingTop="30dp"
-            android:onClick="openTutorial"
+            android:onClick="startTutorial"
             android:src="@drawable/whats_kin_icon" />
 
         <ImageView
@@ -120,7 +120,7 @@
             android:layout_gravity="center_vertical|right"
             android:scaleType="centerInside"
             android:paddingRight="20dp"
-            android:onClick="openAccountInfo"
+            android:onClick="startAccountInfo"
             android:src="@drawable/enter_icon" />
 
         <LinearLayout
