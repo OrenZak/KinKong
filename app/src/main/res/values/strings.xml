@@ -16,4 +16,5 @@
     <string name="public_address">Public Address:</string>
     <string name="what_s_kin">What\'s Kin?</string>
     <string name="copy">Copy</string>
+    <string name="counter_delim">:</string>
 </resources>

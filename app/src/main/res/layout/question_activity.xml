@@ -87,13 +87,12 @@
         android:paddingRight="15dp"
         android:paddingTop="95dp">
 
-
-        <com.kinkong.CountDownShortView
-            android:id="@+id/counter"
+        <com.kinkong.ClockCountDownView
+            android:id="@+id/clock_count_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="15dp" />
-
+            android:paddingBottom="15dp"
+            />
 
         <TextView
             style="@style/text.White"

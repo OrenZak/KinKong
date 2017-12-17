@@ -161,9 +161,9 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void startCountDown() {
-        CountDownShortView countDownShortView = findViewById(R.id.counter);
-        countDownShortView.setListener(this::onCountDownComplete);
-        countDownShortView.startCount(DURATION_SECONDS * 1000);
+        ClockCountDownView countDownView = findViewById(R.id.clock_count_down);
+        countDownView.setListener(this::onCountDownComplete);
+        countDownView.startCount(DURATION_SECONDS * 1000);
     }
 
     private void onCountDownComplete() {
@@ -200,7 +200,7 @@ public class QuestionActivity extends BaseActivity {
         answerViewList.add(findViewById(R.id.answer1));
         answerViewList.add(findViewById(R.id.answer2));
         answerViewList.add(findViewById(R.id.answer3));
-        ((TextView)findViewById(R.id.question)).setText(question.getQuestion());
+        ((TextView) findViewById(R.id.question)).setText(question.getQuestion());
 
         List<String> answersStrArray = question.getAnswers();
         for (int i = 0; i < answerViewList.size(); i++) {

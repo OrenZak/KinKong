@@ -34,7 +34,7 @@ public class CountDownActivity extends BaseActivity {
         question = FBDatabase.getInstance().nextQuestion;
         KinClient kinClient = ((App) getApplication()).getKinClient();
 
-        CountDownView countDownView = findViewById(R.id.countdown_view);
+        ClockCountDownView countDownView = findViewById(R.id.clock_count_down);
         countDownView.setListener(this::startQuestion);
         countDownView.startCount(getCountDownTime());
 
