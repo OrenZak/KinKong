@@ -21,20 +21,21 @@ import java.util.List;
 
 public class CountDownShortView extends LinearLayout {
 
+    private static final int SECONDS_DIVIDER = 10;
     interface ICountDownListener {
         void onComplete();
     }
 
     List<TextSwitcher> txtArray = new ArrayList<>();
-    int seconds0 = -1, seconds1 = -1;
+    int digt0 = -1, digit1 = -1;
     CountDownTimer countDownTimer;
     ICountDownListener listener;
 
     ViewSwitcher.ViewFactory factory = (ViewSwitcher.ViewFactory) () -> {
         TextView textView = new TextView(getContext());
         textView.setGravity(Gravity.CENTER);
-        //TODO need to fix this not const
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 34);
+        int fontSize = (int) (getResources().getDimension(R.dimen.count_down_font_size_big) / getResources().getDisplayMetrics().density);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         return textView;
@@ -57,8 +58,8 @@ public class CountDownShortView extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.countdown_short, this, true);
-        txtArray.add(view.findViewById(R.id.sec0));
-        txtArray.add(view.findViewById(R.id.sec1));
+        txtArray.add(view.findViewById(R.id.digit0));
+        txtArray.add(view.findViewById(R.id.digit1));
 
         for (TextSwitcher textswitcher : txtArray) {
             textswitcher.setFactory(factory);
@@ -79,7 +80,7 @@ public class CountDownShortView extends LinearLayout {
 
             @Override
             public void onTick(long l) {
-                updateTime((int)l / 1000);
+                updateTime((int) l / 1000);
             }
 
             @Override
@@ -98,17 +99,17 @@ public class CountDownShortView extends LinearLayout {
     }
 
     private void updateTime(int seconds) {
-        int s0 = seconds / 10;
+        int division = seconds / SECONDS_DIVIDER;
 
-        if (s0 != seconds0) {
-            seconds0 = s0;
-            updateDigit(0, seconds0);
+        if (digt0 != division) {
+            digt0 = division;
+            updateDigit(0, digt0);
         }
 
-        int s1 = seconds - s0 * 10;
-        if (s1 != seconds1) {
-            seconds1 = s1;
-            updateDigit(1, seconds1);
+        int reminder = seconds - division * SECONDS_DIVIDER;
+        if (digit1 != reminder) {
+            digit1 = reminder;
+            updateDigit(1, digit1);
         }
     }
 

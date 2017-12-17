@@ -49,16 +49,16 @@ public class AnswerView extends FrameLayout {
     }
 
     public void animateVoting(float ratio) {
-        int endWidth = (int) (answer.getWidth() * ratio);
-        int minSize = (int) getResources().getDimension(R.dimen.answer_corner);
-        int maxSize = endWidth - minSize;
-        if (endWidth < minSize) {
-            endWidth = minSize;
-        } else if (endWidth > maxSize) {
-            endWidth = maxSize;
+        int answerWidth = answer.getWidth();
+        int endWidth = (int) (answerWidth * ratio);
+        int startWidth = (int) getResources().getDimension(R.dimen.answer_corner);
+        int maxWidth = answerWidth - startWidth;
+        if (endWidth < startWidth) {
+            endWidth = startWidth;
+        } else if (endWidth > maxWidth) {
+            endWidth = maxWidth;
         }
-
-        ValueAnimator anim = ValueAnimator.ofInt(minSize, endWidth);
+        ValueAnimator anim = ValueAnimator.ofInt(startWidth, endWidth);
         anim.addUpdateListener(valueAnimator -> {
             int val = (Integer) valueAnimator.getAnimatedValue();
             LayoutParams layoutParams = (LayoutParams) voting.getLayoutParams();
