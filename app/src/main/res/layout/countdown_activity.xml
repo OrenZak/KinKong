@@ -54,6 +54,7 @@
                 android:layout_gravity="center_horizontal"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
+                android:tint="@color/white"
                 android:src="@drawable/avd_clock_timer"/>
 
 

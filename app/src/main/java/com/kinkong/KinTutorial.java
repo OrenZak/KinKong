@@ -55,6 +55,7 @@ public class KinTutorial extends BaseVideoActivity {
     private void moveToCountDown() {
         startActivity(CountDownActivity.getIntent(this));
         if(isFromSplash) {
+            releaseMediaPlayer();
             finish();
         }
     }
