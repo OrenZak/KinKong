@@ -30,11 +30,6 @@ public class AnswerView extends FrameLayout {
         init(context);
     }
 
-    public AnswerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,9 +57,8 @@ public class AnswerView extends FrameLayout {
         } else if (endWidth > maxSize) {
             endWidth = maxSize;
         }
-        int startWidth = (int) minSize;
 
-        ValueAnimator anim = ValueAnimator.ofInt(startWidth, endWidth);
+        ValueAnimator anim = ValueAnimator.ofInt(minSize, endWidth);
         anim.addUpdateListener(valueAnimator -> {
             int val = (Integer) valueAnimator.getAnimatedValue();
             LayoutParams layoutParams = (LayoutParams) voting.getLayoutParams();

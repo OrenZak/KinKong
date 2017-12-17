@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,29 +16,26 @@ import kin.sdk.core.KinClient;
 import kin.sdk.core.ResultCallback;
 
 
-public class CountDownActivity extends AppCompatActivity {
+public class CountDownActivity extends BaseActivity {
 
     public static Intent getIntent(Context context) {
         return new Intent(context, CountDownActivity.class);
     }
 
-    private KinClient kinClient;
     private Question question;
     private Animatable animatable;
 
     private Thread thread;
-
-    private boolean shouldMove = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
         question = FBDatabase.getInstance().nextQuestion;
-        kinClient = ((App) getApplication()).getKinClient();
+        KinClient kinClient = ((App) getApplication()).getKinClient();
 
         CountDownView countDownView = findViewById(R.id.countdown_view);
-        countDownView.setListener(this::moveToQuestion);
+        countDownView.setListener(this::startQuestion);
         countDownView.startCount(getCountDownTime());
 
         updatePrize();
@@ -66,8 +62,8 @@ public class CountDownActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                while(true) {
-                    if(!animatable.isRunning()) {
+                while (true) {
+                    if (!animatable.isRunning()) {
                         startAnimation();
                     }
                 }
@@ -83,16 +79,13 @@ public class CountDownActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        shouldMove = true;
         startThreadAnimation();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        shouldMove = false;
         thread.interrupt();
-
     }
 
     private void updatePrize() {
@@ -117,20 +110,22 @@ public class CountDownActivity extends AppCompatActivity {
         return time - currentTime;
     }
 
-    private void moveToQuestion() {
-        if (shouldMove ) {
-            startActivity(QuestionVideoActivity.getIntent(this));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    private void startQuestion() {
+        Intent questionIntent = QuestionVideoActivity.getIntent(this);
+        if (startScreen(questionIntent)) {
             finish();
         }
     }
 
-    public void openAccountInfo(View view) {
-        startActivity(new Intent(this, AccountInfoActivity.class));
+    public void startAccountInfo(View view) {
+        Intent accountInfoIntent = AccountInfoActivity.getInent(this);
+        startScreen(accountInfoIntent);
     }
 
-    public void openTutorial(View view) {
-        startActivity(KinTutorial.getIntent(this, false));
-        finish();
+    public void startTutorial(View view) {
+        Intent kinTutorialIntent = KinTutorial.getIntent(this, false);
+        if (startScreen(kinTutorialIntent)) {
+            finish();
+        }
     }
 }

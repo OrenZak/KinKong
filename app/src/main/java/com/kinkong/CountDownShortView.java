@@ -50,11 +50,6 @@ public class CountDownShortView extends LinearLayout {
         init(context);
     }
 
-    public CountDownShortView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
     private void init(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setGravity(Gravity.CENTER_VERTICAL);

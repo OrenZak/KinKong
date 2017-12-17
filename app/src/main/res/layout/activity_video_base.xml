@@ -22,6 +22,7 @@
         android:layout_marginBottom="@dimen/block_margin"
         style="@style/text.Blue"
         android:background="@drawable/background_oval_rounded_white"
+        android:visibility="gone"
         android:text="Skip"/>
 
 </FrameLayout>

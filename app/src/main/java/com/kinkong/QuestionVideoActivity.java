@@ -28,13 +28,15 @@ public class QuestionVideoActivity extends BaseVideoActivity {
 
     @Override
     MediaPlayer.OnCompletionListener getCompletionListener() {
-        return mp -> moveToQuestionText();
+        return mp -> startQuestion();
     }
 
-    private void moveToQuestionText() {
-        releaseMediaPlayer();
-        startActivity(QuestionActivity.getIntent(this));
-        finish();
+    private void startQuestion() {
+        Intent questionIntent = QuestionActivity.getIntent(this);
+        if (startScreen(questionIntent)) {
+            releaseMediaPlayer();
+            finish();
+        }
     }
 
     @Override
@@ -52,7 +54,6 @@ public class QuestionVideoActivity extends BaseVideoActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_video_base);
-        findViewById(R.id.skip).setVisibility(View.GONE);
         super.onCreate(savedInstanceState);
     }
 
