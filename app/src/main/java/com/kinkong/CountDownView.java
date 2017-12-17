@@ -33,8 +33,8 @@ public class CountDownView extends LinearLayout {
     ViewSwitcher.ViewFactory factory = (ViewSwitcher.ViewFactory) () -> {
         TextView textView = new TextView(getContext());
         textView.setGravity(Gravity.CENTER);
-        //TODO need to fix this not const
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 34);
+        int fontSize = (int) (getResources().getDimension(R.dimen.count_down_font_size_big) / getResources().getDisplayMetrics().density);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         return textView;
