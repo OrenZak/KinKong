@@ -44,7 +44,7 @@ public class AccountInfoActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_account_info);
         super.onCreate(savedInstanceState);
-        kinClient = ((App)getApplication()).getKinClient();
+        kinClient = getApp().getKinClient();
         init();
     }
 
@@ -129,7 +129,7 @@ public class AccountInfoActivity extends BaseActivity {
     private String exportPrivateKey(String passphrase) {
         String exportedKey = null;
         try {
-            exportedKey =  kinClient.getAccount().exportKeyStore(App.PASSPHRASE, passphrase);
+            exportedKey =  kinClient.getAccount().exportKeyStore(getPassPhrase(), passphrase);
         } catch (PassphraseException | OperationFailedException e) {
             e.printStackTrace();
         }

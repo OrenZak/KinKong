@@ -1,9 +1,14 @@
 package com.kinkong;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.util.UUID;
 
 import kin.sdk.core.KinClient;
 import kin.sdk.core.ServiceProvider;
+import kin.sdk.core.exception.CreateAccountException;
 import kin.sdk.core.exception.EthereumClientException;
 
 public class App extends Application {
@@ -12,24 +17,43 @@ public class App extends Application {
     private final String ROPSTEN_TEST_NET_URL = "http://parity.rounds.video:8545";
     private final String MAIN_NET_URL = "http://mainnet.rounds.video:8545";
 
-    // ideally user should be asked for a passphrase when
-    // creating an account and then the same passphrase
-    // should be used when sending transactions
-    // we are using a hardcoded passphrase.
-    public static String PASSPHRASE = "user_passphrase";
+    private static final String PASSPHRASE_KEY = "passphraeKey";
+    private static final String TUTORIAL_KEY = "tutorialKey";
+    private static final String SHARE_PREF = "kingkongSharePref";
+    private KinClient kinClient = null;
+    private SharedPreferences sharedPreferences;
 
     public enum NetWorkType {
         MAIN,
         ROPSTEN
     }
 
-    private KinClient kinClient = null;
-
     @Override
     public void onCreate() {
         super.onCreate();
         createKinClient(NetWorkType.ROPSTEN);
+        sharedPreferences = getSharedPreferences(SHARE_PREF, MODE_PRIVATE);
+    }
 
+    public String getPassphrase() {
+        return sharedPreferences.getString(PASSPHRASE_KEY, null);
+    }
+
+    public void createAccount(Context context) throws CreateAccountException {
+        kinClient.createAccount(createPassphrase());
+    }
+
+    public void onSeenTutorial() {
+        sharedPreferences.edit().putBoolean(TUTORIAL_KEY, true).commit();
+    }
+
+    public boolean hasSeenTutorial() {
+        return sharedPreferences.getBoolean(TUTORIAL_KEY, false);
+    }
+
+
+    public KinClient getKinClient() {
+        return kinClient;
     }
 
     private KinClient createKinClient(NetWorkType type) {
@@ -57,8 +81,9 @@ public class App extends Application {
         return kinClient;
     }
 
-    public KinClient getKinClient() {
-        return kinClient;
+    private String createPassphrase() {
+        final String passphrase = UUID.randomUUID().toString();
+        sharedPreferences.edit().putString(PASSPHRASE_KEY, passphrase).commit();
+        return passphrase;
     }
-
 }

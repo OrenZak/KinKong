@@ -40,6 +40,7 @@ public class KinTutorial extends BaseVideoActivity {
         super.onCreate(savedInstanceState);
         isFromSplash = getIntent().getBooleanExtra(IS_FROM_SPLASH, false);
         findViewById(R.id.skip).setOnClickListener(v -> startCountDown());
+        getApp().onSeenTutorial();
     }
 
     @Override

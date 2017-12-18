@@ -1,10 +1,9 @@
 package com.kinkong;
 
-import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,41 +17,35 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import kin.sdk.core.KinClient;
 import kin.sdk.core.exception.CreateAccountException;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final String TAG = SplashActivity.class.getSimpleName();
     private StorageReference storageReference;
     private File kinTutorialFile;
     private OutputStream outStream;
-
-    private SharedPreferences sharedPreferences;
     private FirebaseAuth firebaseAuth;
-
-
-
-    private static final String MAIN_SHAEREDPREF = "kinkong_sharedpref";
-    private static final String FIRST_TIME = "first_time";
-    private static final String TAG = SplashActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = getSharedPreferences(MAIN_SHAEREDPREF, MODE_PRIVATE);
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("kin_tutorial2.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
-        createAccount();
+        try {
+            ((App) getApplication()).createAccount(this);
+        } catch (CreateAccountException e) {
+            e.printStackTrace();
+            finish();
+        }
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
@@ -64,10 +57,10 @@ public class SplashActivity extends AppCompatActivity {
 
     private void signInAnonymously() {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Log.d(TAG, "already signInAnonymously");
             getFireBaseBasicData();
-        }else {
+        } else {
             firebaseAuth.signInAnonymously()
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -94,14 +87,13 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FBDatabase.getInstance().setNextQuestion(dataSnapshot.getValue(Question.class));
-                if(isFirsTime()) {
+                if (!hasSeenTutorial()) {
                     try {
                         downloadTutorial();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     moveToCountDown();
                 }
             }
@@ -113,22 +105,11 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
-    private void createAccount() {
-        try {
-            KinClient kinClient = ((App)getApplication()).getKinClient();
-            kinClient.createAccount(App.PASSPHRASE);
-        } catch (CreateAccountException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void downloadTutorial() throws IOException {
-        sharedPreferences.edit().putBoolean(FIRST_TIME,false).apply();
-        if(kinTutorialFile.exists()){
+        if (kinTutorialFile.exists()) {
             new Handler().postDelayed(this::moveToTutorial, 1000);
 
-        }
-        else {
+        } else {
             outStream = new FileOutputStream(kinTutorialFile);
             storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
                 try {
@@ -143,7 +124,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void moveToTutorial() {
-        startActivity(KinTutorial.getIntent(this,true));
+        startActivity(KinTutorial.getIntent(this, true));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
@@ -157,14 +138,15 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private boolean isFirsTime() {
-        return sharedPreferences.getBoolean(FIRST_TIME, true);
+    private boolean hasSeenTutorial() {
+        App app = (App) getApplication();
+        return app.hasSeenTutorial();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         storageReference = null;
-        sharedPreferences = null;
     }
+
 }
