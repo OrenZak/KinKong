@@ -4,17 +4,18 @@ An easy, fun and cool trivia game where you can earn KIN !
 ## What's it all about?
 Each day we will update a trivia question.
 When the timer countdown will end you will see our community manager ask you a simple question related to crypto.<br/>
-You will have 10 seconds to answer the question, once you select an answer you won't be able to change it so keep it in mind.<br/>
+You will have 10 seconds to answer the question, keep it in mind: once you select an answer you won't be able to change it.<br/>
 After the 10 seconds you'll see if your answer was correct or wrong.
-The winners will get to their account the daily relative prize: which will be the total daily prize divided by the winners count.
+If you were correct you will get to your wallet the daily relative prize: which is the total daily prize divided by the winners count.<br/>
+For example if the daily total prize is 100KIN and there are 10 that got the answer correct, each of them will get 10KIN.
 
 
 ## How to play
 Once we will upload the app to GooglePlay.
  * Open the app and this will create a Kin wallet automatically.
  * Wait for the timer countdown to end.
- * Listen to the question, and choose your answer.
- * After 10 seconds you'll see if you were correct and KIN will be send to your account.
+ * Listen to the question, and choose an answer.
+ * After 10 seconds you'll see if you were correct and KIN will be send to your wallet.
  
 
 ## Screenshots
