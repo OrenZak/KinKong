@@ -18,5 +18,5 @@ Once we will upload the app to GooglePlay.
  
 
 ## Demo
-![](https://ibb.co/nADvzm)
+![Splash Screen](https://ibb.co/nADvzm)
 
