@@ -18,4 +18,4 @@ Once we will upload the app to GooglePlay.
  
 
 ## Demo
-![Splash Screen](https://preview.ibb.co/iZAxC6/Screenshot_2017_12_18_12_10_12.png)![CountDown Screen](https://image.ibb.co/foxr5R/Count_Down_Screen.png)
+<img src="https://user-images.githubusercontent.com/8303735/34102626-84405c10-e3f2-11e7-9e94-a1e1453a1605.png" width="8%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102624-83fb9ba2-e3f2-11e7-8063-6a28bf567584.png" width="8%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102622-83d8d496-e3f2-11e7-8fef-d52c591ae488.png" width="8%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102625-841b2e22-e3f2-11e7-88d0-45ab75d867fa.png" width="8%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102627-846279f8-e3f2-11e7-9bc1-24568810b1c3.png" width="8%"></img>
