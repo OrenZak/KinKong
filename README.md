@@ -18,5 +18,4 @@ Once we will upload the app to GooglePlay.
  
 
 ## Demo
-![Splash Screen](https://ibb.co/nADvzm)
-
+![Splash Screen](https://preview.ibb.co/iZAxC6/Screenshot_2017_12_18_12_10_12.png)
