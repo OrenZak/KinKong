@@ -1,4 +1,4 @@
-#KinKong
+# KinKong
 An easy, fun and cool trivia game where you can earn KIN !
 
 ## What's it all about?
