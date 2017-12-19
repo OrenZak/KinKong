@@ -48,8 +48,8 @@
 
             <ImageView
                 android:id="@+id/timer"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:padding="8dp"
@@ -59,12 +59,25 @@
 
 
             <TextView
-                style="@style/text.White"
+                android:id="@+id/next_question_title"
+                style="@style/text.White.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/next_question_in"
                 android:textSize="@dimen/title_big" />
+
+            <TextView
+                android:id="@+id/join_telegram_title"
+                style="@style/text.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:onClick="openTelegramGroup"
+                android:padding="25dp"
+                android:text="@string/join_telegram"
+                android:visibility="gone" />
 
             <com.kinkong.ClockCountDownView
                 android:id="@+id/clock_count_down"
@@ -76,29 +89,42 @@
 
         </LinearLayout>
 
-
         <LinearLayout
-            android:id="@+id/prize_layout"
+            android:id="@+id/prize_telegram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="74dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_prize_is"
+                    android:textSize="@dimen/title_big" />
+
+                <TextView
+                    android:id="@+id/prize"
+                    style="@style/text.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp" />
+            </LinearLayout>
 
             <TextView
                 style="@style/text.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/total_prize_is"
-                android:textSize="@dimen/title_big" />
-
-            <TextView
-                android:id="@+id/prize"
-                style="@style/text.White"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp" />
-
+                android:layout_marginTop="10dp"
+                android:onClick="openTelegramGroup"
+                android:text="@string/keep_me_posted_on_telegram" />
 
         </LinearLayout>
 

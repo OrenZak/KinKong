@@ -156,7 +156,7 @@ public class ClockCountDownView extends LinearLayout {
     }
 
     private void updateHours(int seconds) {
-        seconds %= 60;
+        seconds %= 100;
         int divider = seconds / 10;
         if (hour0 != divider) {
             hour0 = divider;
@@ -181,7 +181,9 @@ public class ClockCountDownView extends LinearLayout {
 
     @Override
     protected void onDetachedFromWindow() {
-        countDownTimer.cancel();
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         super.onDetachedFromWindow();
     }
 }

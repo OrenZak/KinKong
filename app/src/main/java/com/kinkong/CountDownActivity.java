@@ -3,6 +3,7 @@ package com.kinkong;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +13,6 @@ import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
 import kin.sdk.core.Balance;
-import kin.sdk.core.KinClient;
 import kin.sdk.core.ResultCallback;
 
 
@@ -22,6 +22,9 @@ public class CountDownActivity extends BaseActivity {
         return new Intent(context, CountDownActivity.class);
     }
 
+    private final static int MAX_HOURS = 99;
+    private final static float TO_HOURS_DIVIDER = 1000 / 60 / 60;
+    private final static String TELEGRAM_LINK = "https://t.me/kinfoundation";
     private Question question;
     private Animatable animatable;
 
@@ -32,17 +35,33 @@ public class CountDownActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
         question = FBDatabase.getInstance().nextQuestion;
-        KinClient kinClient = ((App) getApplication()).getKinClient();
+        long countDownTime = getCountDownTime();
+        if (isInvalidTime(countDownTime)) {
+            ((TextView) (findViewById(R.id.next_question_title))).setText(getResources().getString(R.string.keep_me_posted));
+            findViewById(R.id.clock_count_down).setVisibility(View.GONE);
+            findViewById(R.id.prize_telegram).setVisibility(View.GONE);
+            findViewById(R.id.join_telegram_title).setVisibility(View.VISIBLE);
+        } else {
+            updatePrize();
+            startCountDown(countDownTime);
+        }
+        ImageView timer = findViewById(R.id.timer);
+        animatable = ((Animatable) timer.getDrawable());
 
-        ClockCountDownView countDownView = findViewById(R.id.clock_count_down);
-        countDownView.setListener(this::startQuestion);
-        countDownView.startCount(getCountDownTime());
+        startThreadAnimation();
+    }
 
-        updatePrize();
-        kinClient.getAccount().getBalance().run(new ResultCallback<Balance>() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updatePendingBalance();
+    }
+
+    private void updatePendingBalance() {
+        getApp().getKinClient().getAccount().getPendingBalance().run(new ResultCallback<Balance>() {
             @Override
             public void onResult(Balance balance) {
-                updateBalance(balance);
+                updatePendingBalance(balance);
             }
 
             @Override
@@ -50,11 +69,16 @@ public class CountDownActivity extends BaseActivity {
 
             }
         });
+    }
 
-        ImageView timer = findViewById(R.id.timer);
-        animatable = ((Animatable) timer.getDrawable());
+    private boolean isInvalidTime(long countDownTime) {
+        return countDownTime < 0 || countDownTime / TO_HOURS_DIVIDER > MAX_HOURS;
+    }
 
-        startThreadAnimation();
+    private void startCountDown(long countDownTime) {
+        ClockCountDownView countDownView = findViewById(R.id.clock_count_down);
+        countDownView.setListener(this::startQuestion);
+        countDownView.startCount(countDownTime);
     }
 
     private void startThreadAnimation() {
@@ -94,7 +118,7 @@ public class CountDownActivity extends BaseActivity {
         prize.setText(prizeStr);
     }
 
-    private void updateBalance(Balance accountBalance) {
+    private void updatePendingBalance(Balance accountBalance) {
         TextView balance = findViewById(R.id.balance);
         String balanceStr = accountBalance.value(1) + " KIN";
         balance.setText(balanceStr);
@@ -127,5 +151,10 @@ public class CountDownActivity extends BaseActivity {
         if (startScreen(kinTutorialIntent)) {
             finish();
         }
+    }
+
+    public void openTelegramGroup(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TELEGRAM_LINK));
+        startActivity(browserIntent);
     }
 }

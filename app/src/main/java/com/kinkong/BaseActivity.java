@@ -16,7 +16,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         backButton = findViewById(R.id.back_button);
-        if(backButton != null) {
+        if (backButton != null) {
             backButton.setOnClickListener(v -> onBackPressed());
         }
     }
@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected boolean startScreen(Intent moveToIntent) {
-        if(isVisible) {
+        if (isVisible) {
             startActivity(moveToIntent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -42,4 +42,11 @@ public class BaseActivity extends AppCompatActivity {
         return false;
     }
 
+    protected String getPassPhrase() {
+        return getApp().getPassphrase();
+    }
+
+    protected App getApp(){
+        return (App) getApplication();
+    }
 }
