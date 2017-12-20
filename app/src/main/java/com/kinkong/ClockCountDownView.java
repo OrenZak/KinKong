@@ -26,7 +26,8 @@ public class ClockCountDownView extends LinearLayout {
         void onComplete();
     }
 
-    private static final int SEC = 1000;
+    private static final int SEC_IN_MILLISEC = 1000;
+    private static final int HOUR_IN_SEC = 60 * 60;
     private List<TextSwitcher> txtArray = new ArrayList<>();
     private int hour0 = -1, hour1 = -1, minute0 = -1, minute1 = -1, seconds0 = -1, seconds1 = -1;
     private CountDownTimer countDownTimer;
@@ -107,12 +108,12 @@ public class ClockCountDownView extends LinearLayout {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        updateTime(miliSeconds / SEC);
-        countDownTimer = new CountDownTimer(miliSeconds, SEC) {
+        updateTime(miliSeconds / SEC_IN_MILLISEC);
+        countDownTimer = new CountDownTimer(miliSeconds, SEC_IN_MILLISEC) {
 
             @Override
             public void onTick(long l) {
-                updateTime(l / SEC);
+                updateTime(l / SEC_IN_MILLISEC);
             }
 
             @Override
@@ -178,7 +179,7 @@ public class ClockCountDownView extends LinearLayout {
             updateMin(((int) seconds / 60));
         }
         if (hasHours) {
-            updateHours((int) seconds / (60 * 60));
+            updateHours((int) seconds / HOUR_IN_SEC);
         }
     }
 

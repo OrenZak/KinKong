@@ -183,7 +183,7 @@ public class CountDownActivity extends BaseActivity {
     }
 
     public void startAccountInfo(View view) {
-        Intent accountInfoIntent = AccountInfoActivity.getInent(this);
+        Intent accountInfoIntent = AccountInfoActivity.getIntent(this);
         startScreen(accountInfoIntent);
     }
 

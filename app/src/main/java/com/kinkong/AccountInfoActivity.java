@@ -22,21 +22,12 @@ import kin.sdk.core.exception.OperationFailedException;
 import kin.sdk.core.exception.PassphraseException;
 
 public class AccountInfoActivity extends BaseActivity {
-    private TextView publicAddressText;
-    private TextView copyPublic;
-
-    private EditText backupEditText;
-    private TextView doneButton;
-
     private TextView privateKeyTitle;
     private TextView copyPrivate;
     private TextView privateKeyText;
-
-    private TextView whatsKin;
-
     private KinClient kinClient;
 
-    public static Intent getInent(Context context) {
+    public static Intent getIntent(Context context) {
         return new Intent(context, AccountInfoActivity.class);
     }
 
@@ -49,23 +40,22 @@ public class AccountInfoActivity extends BaseActivity {
     }
 
     private void init() {
-        publicAddressText =  findViewById(R.id.public_address);
-        copyPublic = findViewById(R.id.copy_public);
+        TextView publicAddressText = findViewById(R.id.public_address);
+        TextView copyPublic = findViewById(R.id.copy_public);
 
-        backupEditText = findViewById(R.id.backup_passphrase);
-        doneButton = findViewById(R.id.done);
+        EditText backupEditText = findViewById(R.id.backup_passphrase);
+        TextView doneButton = findViewById(R.id.done);
 
         privateKeyTitle = findViewById(R.id.private_key_title);
         copyPrivate = findViewById(R.id.copy_private);
         privateKeyText = findViewById(R.id.private_key);
-
-        whatsKin = findViewById(R.id.whats_kin);
+        findViewById(R.id.whats_kin).setOnClickListener(v -> new WhatsKinDialog(this).show());
+        ;
 
         privateKeyText.setMovementMethod(new ScrollingMovementMethod());
         String address = kinClient.getAccount().getPublicAddress();
         publicAddressText.setText(address);
 
-        whatsKin.setOnClickListener(v -> new WhatsKinDialog(this).show());
 
         doneButton.setOnClickListener(v -> {
             String backupPassphrase = backupEditText.getText().toString();
@@ -84,8 +74,6 @@ public class AccountInfoActivity extends BaseActivity {
             String privateKey = privateKeyText.getText().toString();
             copyToClipboard(privateKey);
         });
-
-
 
         backupEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -118,7 +106,7 @@ public class AccountInfoActivity extends BaseActivity {
             android.content.ClipData clip = android.content.ClipData.newPlainText("copied text", textToCopy);
             clipboard.setPrimaryClip(clip);
         }
-        Toast.makeText(this,"Copied to your clipboard",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Copied to your clipboard", Toast.LENGTH_SHORT).show();
     }
 
     private void hideKeyboard(View view) {
@@ -129,7 +117,7 @@ public class AccountInfoActivity extends BaseActivity {
     private String exportPrivateKey(String passphrase) {
         String exportedKey = null;
         try {
-            exportedKey =  kinClient.getAccount().exportKeyStore(getPassPhrase(), passphrase);
+            exportedKey = kinClient.getAccount().exportKeyStore(getPassPhrase(), passphrase);
         } catch (PassphraseException | OperationFailedException e) {
             e.printStackTrace();
         }

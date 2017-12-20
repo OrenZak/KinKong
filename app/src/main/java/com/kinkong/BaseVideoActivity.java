@@ -36,13 +36,12 @@ abstract class BaseVideoActivity extends BaseActivity {
                 Surface surface = new Surface(surfaceTexture);
 
                 try {
-                    if(mediaPlayer == null) {
+                    if (mediaPlayer == null) {
                         mediaPlayer = new MediaPlayer();
                     }
-                    if(isLocal()){
+                    if (isLocal()) {
                         mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(getVideoURL()));
-                    }
-                    else{
+                    } else {
                         mediaPlayer.setDataSource(getVideoURL());
                         mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
                                 .setLegacyStreamType(AudioManager.STREAM_MUSIC)
