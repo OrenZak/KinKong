@@ -8,12 +8,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import kin.sdk.core.Balance;
 import kin.sdk.core.ResultCallback;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class CountDownActivity extends BaseActivity {
@@ -22,39 +33,32 @@ public class CountDownActivity extends BaseActivity {
         return new Intent(context, CountDownActivity.class);
     }
 
-    private final static int MAX_HOURS = 99;
-    private final static float TO_HOURS_DIVIDER = 1000 / 60 / 60;
+    private final static String SERVER_TIME_URL = "https://us-central1-kinkong-977fc.cloudfunctions.net/date";
+    private final static int MAX_HOURS = 100;
+    private final static long MAX_HOURS_IN_MILLISECONDS = MAX_HOURS * 60 * 60 * 1000;
     private final static String TELEGRAM_LINK = "https://t.me/kinfoundation";
     private Question question;
     private Animatable animatable;
-
     private Thread thread;
+    private TextView prize, balance, nextQuestionTitle;
+    private ClockCountDownView clockCountDownView;
+    private View countDown, prizeTelegram, joinTelegram;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
         question = FBDatabase.getInstance().nextQuestion;
-        long countDownTime = getCountDownTime();
-        if (isInvalidTime(countDownTime)) {
-            ((TextView) (findViewById(R.id.next_question_title))).setText(getResources().getString(R.string.keep_me_posted));
-            findViewById(R.id.clock_count_down).setVisibility(View.GONE);
-            findViewById(R.id.prize_telegram).setVisibility(View.GONE);
-            findViewById(R.id.join_telegram_title).setVisibility(View.VISIBLE);
-        } else {
-            updatePrize();
-            startCountDown(countDownTime);
-        }
+        balance = findViewById(R.id.balance);
         ImageView timer = findViewById(R.id.timer);
         animatable = ((Animatable) timer.getDrawable());
-
+        clockCountDownView = findViewById(R.id.clock_count_down);
+        prizeTelegram = findViewById(R.id.prize_telegram);
+        prize = findViewById(R.id.prize);
+        joinTelegram = findViewById(R.id.join_telegram_title);
+        nextQuestionTitle = findViewById(R.id.next_question_title);
         startThreadAnimation();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        updatePendingBalance();
+        initServerTime();
     }
 
     private void updatePendingBalance() {
@@ -71,14 +75,13 @@ public class CountDownActivity extends BaseActivity {
         });
     }
 
-    private boolean isInvalidTime(long countDownTime) {
-        return countDownTime < 0 || countDownTime / TO_HOURS_DIVIDER > MAX_HOURS;
+    private boolean isValidTime(long countDownTime) {
+        return countDownTime > 0 && countDownTime < MAX_HOURS_IN_MILLISECONDS;
     }
 
     private void startCountDown(long countDownTime) {
-        ClockCountDownView countDownView = findViewById(R.id.clock_count_down);
-        countDownView.setListener(this::startQuestion);
-        countDownView.startCount(countDownTime);
+        clockCountDownView.setListener(this::startQuestion);
+        clockCountDownView.startCount(countDownTime);
     }
 
     private void startThreadAnimation() {
@@ -103,6 +106,7 @@ public class CountDownActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        updatePendingBalance();
         startThreadAnimation();
     }
 
@@ -113,13 +117,11 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void updatePrize() {
-        TextView prize = findViewById(R.id.prize);
         String prizeStr = getPrize() + " KIN";
         prize.setText(prizeStr);
     }
 
     private void updatePendingBalance(Balance accountBalance) {
-        TextView balance = findViewById(R.id.balance);
         String balanceStr = accountBalance.value(1) + " KIN";
         balance.setText(balanceStr);
     }
@@ -128,10 +130,49 @@ public class CountDownActivity extends BaseActivity {
         return question.getPrize();
     }
 
-    private long getCountDownTime() {
+    private void initServerTime() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url(SERVER_TIME_URL).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toast.makeText(CountDownActivity.this, "Error loading data from server", Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    long serverTime = Long.parseLong(jsonObject.get("time").toString());
+                    initCountDown(serverTime);
+                } catch (JSONException e) {
+                    Toast.makeText(CountDownActivity.this, "Error loading data from server", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void initCountDown(long serverTime) {
         long time = question.getTimeStamp();
-        long currentTime = System.currentTimeMillis();
-        return time - currentTime;
+        long countDownTime = time - serverTime;
+        countDownTime=  100000;
+        updateUi(countDownTime);
+    }
+
+    private void updateUi(final long countDownTime) {
+        runOnUiThread(() -> {
+            if (isValidTime(countDownTime)) {
+                updatePrize();
+                startCountDown(countDownTime);
+            } else {
+                nextQuestionTitle.setText(getResources().getString(R.string.keep_me_posted));
+                clockCountDownView.setVisibility(View.GONE);
+                prizeTelegram.setVisibility(View.GONE);
+                joinTelegram.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void startQuestion() {
