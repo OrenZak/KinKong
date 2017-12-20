@@ -39,7 +39,11 @@ public class App extends Application {
     }
 
     public void createAccount(Context context) throws CreateAccountException {
-        kinClient.createAccount(createPassphrase());
+        String passphrase = getPassphrase();
+        if(passphrase == null){
+            passphrase = createPassphrase();
+        }
+        kinClient.createAccount(passphrase);
     }
 
     public void onSeenTutorial() {
