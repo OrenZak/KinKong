@@ -150,7 +150,7 @@ public class QuestionActivity extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
-                    ArrayList<Long> answers_count = (ArrayList<Long>) dataSnapshot.getValue();
+                    List<Long> answers_count = (List<Long>) dataSnapshot.getValue();
                     float sum = 0;
                     for (int i = 0; i < answers_count.size(); i++) {
                         sum += answers_count.get(i);
