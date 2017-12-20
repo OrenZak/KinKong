@@ -18,7 +18,6 @@ public class Question {
     public Question() {
     }
 
-
     public int getPrize() {
         return prize;
     }
@@ -45,5 +44,10 @@ public class Question {
 
     public int getCorrectAnswer() {
         return correct_answer;
+    }
+
+    @Override
+    public String toString() {
+        return "Question: " + question + " TimeStamp: " + time_stamp + " Answers: " + answers.toString();
     }
 }
