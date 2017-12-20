@@ -50,7 +50,6 @@ public class AccountInfoActivity extends BaseActivity {
         copyPrivate = findViewById(R.id.copy_private);
         privateKeyText = findViewById(R.id.private_key);
         findViewById(R.id.whats_kin).setOnClickListener(v -> new WhatsKinDialog(this).show());
-        ;
 
         privateKeyText.setMovementMethod(new ScrollingMovementMethod());
         String address = kinClient.getAccount().getPublicAddress();
