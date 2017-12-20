@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
@@ -39,10 +42,11 @@ public class CountDownActivity extends BaseActivity {
     private final static String TELEGRAM_LINK = "https://t.me/kinfoundation";
     private Question question;
     private Animatable animatable;
-    private Thread thread;
+    private Thread animHourGlassThread;
     private TextView prize, balance, nextQuestionTitle;
     private ClockCountDownView clockCountDownView;
-    private View countDown, prizeTelegram, joinTelegram;
+    private View prizeTelegram, joinTelegram;
+    private boolean timerComplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +54,17 @@ public class CountDownActivity extends BaseActivity {
         setContentView(R.layout.countdown_activity);
         question = FBDatabase.getInstance().nextQuestion;
         balance = findViewById(R.id.balance);
-        ImageView timer = findViewById(R.id.timer);
-        animatable = ((Animatable) timer.getDrawable());
+        ImageView progressHourGlass = findViewById(R.id.timer);
+        animatable = ((Animatable) progressHourGlass.getDrawable());
         clockCountDownView = findViewById(R.id.clock_count_down);
         prizeTelegram = findViewById(R.id.prize_telegram);
         prize = findViewById(R.id.prize);
         joinTelegram = findViewById(R.id.join_telegram_title);
         nextQuestionTitle = findViewById(R.id.next_question_title);
+        init();
+    }
+
+    private void init() {
         startThreadAnimation();
         initServerTime();
     }
@@ -85,7 +93,7 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void startThreadAnimation() {
-        thread = new Thread() {
+        animHourGlassThread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -96,7 +104,7 @@ public class CountDownActivity extends BaseActivity {
                 }
             }
         };
-        thread.start();
+        animHourGlassThread.start();
     }
 
     private void startAnimation() {
@@ -108,12 +116,31 @@ public class CountDownActivity extends BaseActivity {
         super.onResume();
         updatePendingBalance();
         startThreadAnimation();
+        if (timerComplete) {
+            int nextQuestionNum = FBDatabase.getInstance().nextQuestionNum;
+            FBDatabase.getInstance().getQuestionAt(nextQuestionNum++, new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    question = dataSnapshot.getValue(Question.class);
+                    if (question == null) {
+                        Toast.makeText(CountDownActivity.this, "No More Questions for now... ", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        init();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        thread.interrupt();
+        animHourGlassThread.interrupt();
     }
 
     private void updatePrize() {
@@ -157,7 +184,6 @@ public class CountDownActivity extends BaseActivity {
     private void initCountDown(long serverTime) {
         long time = question.getTimeStamp();
         long countDownTime = time - serverTime;
-        countDownTime=  100000;
         updateUi(countDownTime);
     }
 
@@ -176,6 +202,7 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void startQuestion() {
+        timerComplete = true;
         Intent questionIntent = QuestionVideoActivity.getIntent(this);
         if (startScreen(questionIntent)) {
             finish();
