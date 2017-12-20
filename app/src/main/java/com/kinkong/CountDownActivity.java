@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.kinkong.analytics.FBAnalytics;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
@@ -210,15 +211,14 @@ public class CountDownActivity extends BaseActivity {
     }
 
     public void startAccountInfo(View view) {
+        FBAnalytics.getInstance().myBalanceTapped(getApplicationContext(), balance.getText().toString());
         Intent accountInfoIntent = AccountInfoActivity.getIntent(this);
         startScreen(accountInfoIntent);
     }
 
     public void startTutorial(View view) {
         Intent kinTutorialIntent = KinTutorial.getIntent(this, false);
-        if (startScreen(kinTutorialIntent)) {
-            finish();
-        }
+        startScreen(kinTutorialIntent);
     }
 
     public void openTelegramGroup(View view) {

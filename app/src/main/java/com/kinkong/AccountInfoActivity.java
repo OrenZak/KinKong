@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kinkong.analytics.FBAnalytics;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,7 +51,11 @@ public class AccountInfoActivity extends BaseActivity {
         privateKeyTitle = findViewById(R.id.private_key_title);
         copyPrivate = findViewById(R.id.copy_private);
         privateKeyText = findViewById(R.id.private_key);
-        findViewById(R.id.whats_kin).setOnClickListener(v -> new WhatsKinDialog(this).show());
+        findViewById(R.id.whats_kin).setOnClickListener(v -> {
+            FBAnalytics.getInstance().whatsKinTapped(v.getContext());
+            new WhatsKinDialog(this).show();
+
+        });
 
         privateKeyText.setMovementMethod(new ScrollingMovementMethod());
         String address = kinClient.getAccount().getPublicAddress();
@@ -62,16 +68,19 @@ public class AccountInfoActivity extends BaseActivity {
             showPrivateKey(privateKey);
             hideKeyboard(backupEditText);
             backupEditText.setText("");
+            FBAnalytics.getInstance().accountBackupDoneTapped(v.getContext());
         });
 
         copyPublic.setOnClickListener(v -> {
             String publicAddress = publicAddressText.getText().toString();
             copyToClipboard(publicAddress);
+            FBAnalytics.getInstance().publicAddressCopyTapped(v.getContext());
         });
 
         copyPrivate.setOnClickListener(v -> {
             String privateKey = privateKeyText.getText().toString();
             copyToClipboard(privateKey);
+            FBAnalytics.getInstance().exportKeyCopyTapped(v.getContext());
         });
 
         backupEditText.addTextChangedListener(new TextWatcher() {
