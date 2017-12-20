@@ -1,5 +1,9 @@
 package com.kinkong.database;
 
+import android.text.TextUtils;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,15 @@ public class FBDatabase {
     }
 
     private FBDatabase() {
+    }
+
+    private String getUserUid() {
+        String userUid = "";
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            userUid = firebaseUser.getUid();
+        }
+        return userUid;
     }
 
     public void cacheBasicData(final ValueEventListener valueEventListener) {
@@ -55,13 +68,19 @@ public class FBDatabase {
     }
 
     public void setWinner(String publicAddress) {
-        database.getReference("questions").child(nextQuestionNum + "").child("winners").push().setValue(publicAddress);
-
+        String userUid = getUserUid();
+        if (!TextUtils.isEmpty(userUid)) {
+            database.getReference("answers").child(nextQuestionNum + "").child("winners").child(userUid).setValue(publicAddress);
+        }
     }
 
     public void setAnswer(int answerIndex) {
-        DatabaseReference answerCount = database.getReference("questions/" + nextQuestionNum + "/answers_count/" + answerIndex);
+        DatabaseReference answerCount = database.getReference("answers/" + nextQuestionNum + "/answers_count/" + answerIndex);
         upCount(answerCount);
+    }
+
+    public void getAnswersCount(ValueEventListener valueEventListener) {
+        database.getReference("answers/" + nextQuestionNum + "/answers_count").addListenerForSingleValueEvent(valueEventListener);
     }
 
     public void updateNextQuestion() {

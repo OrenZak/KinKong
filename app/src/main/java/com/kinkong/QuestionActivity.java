@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
@@ -81,10 +85,9 @@ public class QuestionActivity extends BaseActivity {
     private void sendAnswer() {
         if (isWinner()) {
             FBDatabase.getInstance().setWinner(getPublicAddress());
-        } else {
-            if (answerIndex != UNSELECTED_INDEX) {
-                FBDatabase.getInstance().setAnswer(answerIndex);
-            }
+        }
+        if (answerIndex != UNSELECTED_INDEX) {
+            FBDatabase.getInstance().setAnswer(answerIndex);
         }
     }
 
@@ -143,15 +146,31 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void animateVoting() {
-        List<Long> answers_count = question.getAnswersCount();
-        float sum = 0;
-        for (Long count : answers_count) {
-            sum += count;
-        }
-        for (int i = 0; i < answers_count.size(); i++) {
-            float ratio = (float) (answers_count.get(i)) / sum;
-            answerViewList.get(i).animateVoting(ratio);
-        }
+        FBDatabase.getInstance().getAnswersCount(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    List<Long> answers_count = (List<Long>) dataSnapshot.getValue();
+                    float sum = 0;
+                    for (int i = 0; i < answers_count.size(); i++) {
+                        sum += answers_count.get(i);
+                    }
+                    for (int i = 0; i < answers_count.size(); i++) {
+                        if (i < answerViewList.size()) {
+                            float ratio = (float) (answers_count.get(i)) / sum;
+                            answerViewList.get(i).animateVoting(ratio);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("animateVoting", "onDataChange: animateVoting Exception");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("animateVoting", "animateVoting onCancelled: ");
+            }
+        });
     }
 
     private void disableClicks() {
@@ -173,8 +192,8 @@ public class QuestionActivity extends BaseActivity {
         animateClose();
         updateAnswersColors();
         updateLayout();
-        FBDatabase.getInstance().updateNextQuestion();
         animateVoting();
+        FBDatabase.getInstance().updateNextQuestion();
     }
 
     private void updateLayout() {
