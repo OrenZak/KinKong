@@ -22,8 +22,7 @@ public class App extends Application {
     private static final String SHARE_PREF = "kingkongSharePref";
     private KinClient kinClient = null;
     private SharedPreferences sharedPreferences;
-
-    public enum NetWorkType {
+    private enum NetWorkType {
         MAIN,
         ROPSTEN
     }

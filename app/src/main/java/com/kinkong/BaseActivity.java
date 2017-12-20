@@ -8,14 +8,12 @@ import android.widget.ImageView;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected ImageView backButton;
-
     protected boolean isVisible = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        backButton = findViewById(R.id.back_button);
+        ImageView backButton = findViewById(R.id.back_button);
         if (backButton != null) {
             backButton.setOnClickListener(v -> onBackPressed());
         }
