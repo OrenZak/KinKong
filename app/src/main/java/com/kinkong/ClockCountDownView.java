@@ -55,9 +55,9 @@ public class ClockCountDownView extends LinearLayout {
                 0, 0);
         try {
             hasHours = a.getBoolean(R.styleable.ClockCountDownView_hours, false);
-            if(hasHours){
+            if (hasHours) {
                 hasMinutes = true;
-            }else {
+            } else {
                 hasMinutes = a.getBoolean(R.styleable.ClockCountDownView_minutes, false);
             }
         } finally {
@@ -104,6 +104,9 @@ public class ClockCountDownView extends LinearLayout {
 
 
     public void startCount(long miliSeconds) {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         updateTime(miliSeconds / SEC);
         countDownTimer = new CountDownTimer(miliSeconds, SEC) {
 
@@ -181,7 +184,7 @@ public class ClockCountDownView extends LinearLayout {
 
     @Override
     protected void onDetachedFromWindow() {
-        if(countDownTimer != null) {
+        if (countDownTimer != null) {
             countDownTimer.cancel();
         }
         super.onDetachedFromWindow();
