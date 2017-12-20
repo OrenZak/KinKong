@@ -38,8 +38,7 @@ dependencies {
 
     compile "kinfoundation.ethereum:geth:1.0.2@aar"
     compile "com.github.kinfoundation:kin-sdk-core-android:37ad46e"
-
-    implementation 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 

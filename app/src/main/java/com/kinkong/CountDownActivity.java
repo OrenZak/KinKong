@@ -12,10 +12,6 @@ import android.widget.Toast;
 
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +20,11 @@ import java.io.IOException;
 
 import kin.sdk.core.Balance;
 import kin.sdk.core.ResultCallback;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class CountDownActivity extends BaseActivity {
@@ -39,15 +40,25 @@ public class CountDownActivity extends BaseActivity {
     private Question question;
     private Animatable animatable;
     private Thread thread;
+    private TextView prize, balance, nextQuestionTitle;
+    private ClockCountDownView clockCountDownView;
+    private View countDown, prizeTelegram, joinTelegram;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
         question = FBDatabase.getInstance().nextQuestion;
+        balance = findViewById(R.id.balance);
         ImageView timer = findViewById(R.id.timer);
         animatable = ((Animatable) timer.getDrawable());
+        clockCountDownView = findViewById(R.id.clock_count_down);
+        prizeTelegram = findViewById(R.id.prize_telegram);
+        prize = findViewById(R.id.prize);
+        joinTelegram = findViewById(R.id.join_telegram_title);
+        nextQuestionTitle = findViewById(R.id.next_question_title);
         startThreadAnimation();
+        initServerTime();
     }
 
     private void updatePendingBalance() {
@@ -69,9 +80,8 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void startCountDown(long countDownTime) {
-        ClockCountDownView countDownView = findViewById(R.id.clock_count_down);
-        countDownView.setListener(this::startQuestion);
-        countDownView.startCount(countDownTime);
+        clockCountDownView.setListener(this::startQuestion);
+        clockCountDownView.startCount(countDownTime);
     }
 
     private void startThreadAnimation() {
@@ -97,7 +107,6 @@ public class CountDownActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         updatePendingBalance();
-        initServerTime();
         startThreadAnimation();
     }
 
@@ -108,13 +117,11 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void updatePrize() {
-        TextView prize = findViewById(R.id.prize);
         String prizeStr = getPrize() + " KIN";
         prize.setText(prizeStr);
     }
 
     private void updatePendingBalance(Balance accountBalance) {
-        TextView balance = findViewById(R.id.balance);
         String balanceStr = accountBalance.value(1) + " KIN";
         balance.setText(balanceStr);
     }
@@ -125,18 +132,16 @@ public class CountDownActivity extends BaseActivity {
 
     private void initServerTime() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(SERVER_TIME_URL)
-                .build();
+        Request request = new Request.Builder().url(SERVER_TIME_URL).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(CountDownActivity.this, "Error loading data from server", Toast.LENGTH_LONG).show();
                 finish();
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().string());
                     long serverTime = Long.parseLong(jsonObject.get("time").toString());
@@ -145,7 +150,6 @@ public class CountDownActivity extends BaseActivity {
                     Toast.makeText(CountDownActivity.this, "Error loading data from server", Toast.LENGTH_LONG).show();
                     finish();
                 }
-
             }
         });
     }
@@ -153,6 +157,7 @@ public class CountDownActivity extends BaseActivity {
     private void initCountDown(long serverTime) {
         long time = question.getTimeStamp();
         long countDownTime = time - serverTime;
+        countDownTime=  100000;
         updateUi(countDownTime);
     }
 
@@ -162,10 +167,10 @@ public class CountDownActivity extends BaseActivity {
                 updatePrize();
                 startCountDown(countDownTime);
             } else {
-                ((TextView) (findViewById(R.id.next_question_title))).setText(getResources().getString(R.string.keep_me_posted));
-                findViewById(R.id.clock_count_down).setVisibility(View.GONE);
-                findViewById(R.id.prize_telegram).setVisibility(View.GONE);
-                findViewById(R.id.join_telegram_title).setVisibility(View.VISIBLE);
+                nextQuestionTitle.setText(getResources().getString(R.string.keep_me_posted));
+                clockCountDownView.setVisibility(View.GONE);
+                prizeTelegram.setVisibility(View.GONE);
+                joinTelegram.setVisibility(View.VISIBLE);
             }
         });
     }
