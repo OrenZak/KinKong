@@ -76,7 +76,6 @@
                 android:gravity="center_horizontal"
                 android:onClick="openTelegramGroup"
                 android:padding="25dp"
-                android:text="@string/join_telegram"
                 android:visibility="gone" />
 
             <com.kinkong.ClockCountDownView
@@ -119,12 +118,12 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/keep_me_posted"
                 style="@style/text.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:onClick="openTelegramGroup"
-                android:text="@string/keep_me_posted_on_telegram" />
+                android:onClick="openTelegramGroup" />
 
         </LinearLayout>
 

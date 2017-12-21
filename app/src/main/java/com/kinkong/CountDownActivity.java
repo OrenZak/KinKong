@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,9 +48,12 @@ public class CountDownActivity extends BaseActivity {
     private Thread animHourGlassThread;
     private TextView prize, balance, nextQuestionTitle;
     private ClockCountDownView clockCountDownView;
-    private View prizeTelegram, joinTelegram;
+    private View prizeTelegram;
+    private TextView joinTelegram, keepMePosted;
     private boolean timerComplete;
     private boolean shouldAnimate = true;
+
+    private SpannableString telegramSpannable = new SpannableString("Telegram");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +67,10 @@ public class CountDownActivity extends BaseActivity {
         prizeTelegram = findViewById(R.id.prize_telegram);
         prize = findViewById(R.id.prize);
         joinTelegram = findViewById(R.id.join_telegram_title);
+        keepMePosted = findViewById(R.id.keep_me_posted);
         nextQuestionTitle = findViewById(R.id.next_question_title);
+        telegramSpannable.setSpan(new UnderlineSpan(), 0, telegramSpannable.length(), 0);
+        setKeepMePostedText();
         init();
     }
 
@@ -199,9 +207,21 @@ public class CountDownActivity extends BaseActivity {
                 nextQuestionTitle.setText(getResources().getString(R.string.keep_me_posted));
                 clockCountDownView.setVisibility(View.GONE);
                 prizeTelegram.setVisibility(View.GONE);
-                joinTelegram.setVisibility(View.VISIBLE);
+                setJoinTelegramText();
             }
         });
+    }
+
+    private void setJoinTelegramText() {
+        joinTelegram.setText("Join our ");
+        joinTelegram.append(telegramSpannable);
+        joinTelegram.append(" community channel for more details about next questions and prize");
+        joinTelegram.setVisibility(View.VISIBLE);
+    }
+
+    private void setKeepMePostedText() {
+        keepMePosted.setText("Keep Me Posted on ");
+        keepMePosted.append(telegramSpannable);
     }
 
     private void startQuestion() {
