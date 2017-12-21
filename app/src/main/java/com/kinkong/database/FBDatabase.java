@@ -11,15 +11,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
-
 import com.kinkong.database.data.Question;
 
 public class FBDatabase {
+    public static final int MAX_QUESTIONS_IN_RAW = 3;
     private static final FBDatabase ourInstance = new FBDatabase();
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-    public int nextQuestionNum;
+    public int nextQuestionNum, nextQuestionIndexOrigin;
     public Question nextQuestion;
 
     public static FBDatabase getInstance() {
@@ -43,7 +42,7 @@ public class FBDatabase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    nextQuestionNum = dataSnapshot.getValue(Integer.class);
+                    nextQuestionIndexOrigin = nextQuestionNum = dataSnapshot.getValue(Integer.class);
                     getQuestionAt(nextQuestionNum, valueEventListener);
                 }
             }
@@ -53,6 +52,10 @@ public class FBDatabase {
 
             }
         });
+    }
+
+    public boolean shouldSeenNextQuestion() {
+        return (nextQuestionNum + 1) - nextQuestionIndexOrigin < MAX_QUESTIONS_IN_RAW;
     }
 
     public void setNextQuestion(Question question) {
@@ -96,7 +99,21 @@ public class FBDatabase {
 
             }
         });
+    }
 
+    public void updateNextQuestionSession() {
+        nextQuestionNum = nextQuestionIndexOrigin + MAX_QUESTIONS_IN_RAW;
+        getQuestionAt(nextQuestionNum, new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                setNextQuestion(dataSnapshot.getValue(Question.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void upCount(DatabaseReference postRef) {

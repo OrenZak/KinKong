@@ -28,22 +28,29 @@ public class QuestionActivity extends BaseActivity {
 
     private static final float UNSELECTED_ALPHA = 0.7f;
     private static final float SELECTED_ALPHA = 1f;
+    private static final long WAIT_TIME_BETWEEN_QUESTIONS = 10000;
 
     private Question question;
     private KinAccount account;
     private MediaPlayer mediaPlayer;
-
     private int answerIndex = UNSELECTED_INDEX;
+    private View root;
 
     private List<AnswerView> answerViewList = new ArrayList<>(4);
+    private boolean isWinner;
+    private boolean shouldMoveToScreen;
+    private boolean shouldMoveToNextSession;
+
+
     private View.OnClickListener answerClickListener = view -> {
         AnswerView answerView = (AnswerView) view;
         answerView.setSelected(true);
         disableClicks();
         answerIndex = Integer.parseInt((String) view.getTag());
         updateSelection(answerIndex);
+        isWinner = answerIndex == question.getCorrectAnswer();
         sendAnswer();
-        FBAnalytics.getInstance().answeredTapped(view.getContext(), isWinner(), answerIndex);
+        FBAnalytics.getInstance().answeredTapped(view.getContext(), isWinner, answerIndex);
     };
 
     public static Intent getIntent(Context context) {
@@ -54,9 +61,9 @@ public class QuestionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity);
+        root = findViewById(R.id.root);
         account = ((App) getApplication()).getKinClient().getAccount();
         question = FBDatabase.getInstance().nextQuestion;
-
         initViews();
         startCountDown();
     }
@@ -67,11 +74,33 @@ public class QuestionActivity extends BaseActivity {
         releaseMediaPlayer();
     }
 
-    public void closeQuestion(View view) {
-        Intent countDownIntent = CountDownActivity.getIntent(this);
-        if (startScreen(countDownIntent)) {
-            finish();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (shouldMoveToScreen) {
+            //TODO
         }
+    }
+
+    public void closeScreen(long waitTime) {
+        shouldMoveToScreen = true;
+        root.postDelayed(() -> {
+            if (shouldMoveToNextSession) {
+                startNextSessionCountDown();
+            } else {
+                startNextQuestionVideo();
+            }
+        }, waitTime);
+    }
+
+    private void startNextQuestionVideo() {
+        startScreen(QuestionVideoActivity.getIntent(this));
+        finish();
+    }
+
+    private void startNextSessionCountDown() {
+        startScreen(CountDownActivity.getIntent(this));
+        finish();
     }
 
     private void updateSelection(int index) {
@@ -85,23 +114,12 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void sendAnswer() {
-        if (isWinner()) {
+        if (isWinner) {
             FBDatabase.getInstance().setWinner(getPublicAddress());
         }
         if (answerIndex != UNSELECTED_INDEX) {
             FBDatabase.getInstance().setAnswer(answerIndex);
         }
-    }
-
-    private boolean isWinner() {
-        return answerIndex == question.getCorrectAnswer();
-    }
-
-    private void animateClose() {
-        View view = findViewById(R.id.close_button);
-        view.setAlpha(0);
-        view.setVisibility(View.VISIBLE);
-        view.animate().alpha(1).setDuration(1000).rotation(360).setStartDelay(3000).setInterpolator(new AccelerateDecelerateInterpolator()).start();
     }
 
     private void updateLoserLayout() {
@@ -191,15 +209,20 @@ public class QuestionActivity extends BaseActivity {
         disableClicks();
         deselectAnswers();
         updateSelection(question.getCorrectAnswer());
-        animateClose();
         updateAnswersColors();
         updateLayout();
         animateVoting();
-        FBDatabase.getInstance().updateNextQuestion();
+        if (isWinner && FBDatabase.getInstance().shouldSeenNextQuestion()) {
+            FBDatabase.getInstance().updateNextQuestion();
+        } else {
+            FBDatabase.getInstance().updateNextQuestionSession();
+            shouldMoveToNextSession = true;
+        }
+        closeScreen(WAIT_TIME_BETWEEN_QUESTIONS);
     }
 
     private void updateLayout() {
-        if (isWinner()) {
+        if (isWinner) {
             updateWinnerLayout();
         } else {
             updateLoserLayout();
