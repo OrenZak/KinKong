@@ -58,6 +58,7 @@ public class KinTutorial extends BaseVideoActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        releaseMediaPlayer();
         if(isFromSplash){
             startCountDown();
         }
