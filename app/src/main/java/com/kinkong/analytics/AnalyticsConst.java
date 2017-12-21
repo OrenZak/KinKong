@@ -7,6 +7,7 @@ class AnalyticsConst {
      */
     static final String IS_CORRECT = "is_correct";
     static final String KIN_AMOUNT = "kin_amount";
+    static final String ANSWER_INDEX = "answer_index";
 
     /**
      * Events

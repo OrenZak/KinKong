@@ -48,6 +48,7 @@ public class CountDownActivity extends BaseActivity {
     private ClockCountDownView clockCountDownView;
     private View prizeTelegram, joinTelegram;
     private boolean timerComplete;
+    private boolean shouldAnimate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +95,12 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void startThreadAnimation() {
+        shouldAnimate = true;
         animHourGlassThread = new Thread() {
             @Override
             public void run() {
                 super.run();
-                while (true) {
+                while (shouldAnimate) {
                     if (!animatable.isRunning()) {
                         startAnimation();
                     }
@@ -141,7 +143,7 @@ public class CountDownActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        animHourGlassThread.interrupt();
+        shouldAnimate = false;
     }
 
     private void updatePrize() {

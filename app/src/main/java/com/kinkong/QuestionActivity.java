@@ -43,7 +43,7 @@ public class QuestionActivity extends BaseActivity {
         answerIndex = Integer.parseInt((String) view.getTag());
         updateSelection(answerIndex);
         sendAnswer();
-        FBAnalytics.getInstance().answeredTapped(view.getContext(), isWinner());
+        FBAnalytics.getInstance().answeredTapped(view.getContext(), isWinner(), answerIndex);
     };
 
     public static Intent getIntent(Context context) {

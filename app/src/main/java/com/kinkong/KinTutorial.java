@@ -58,6 +58,7 @@ public class KinTutorial extends BaseVideoActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        releaseMediaPlayer();
         if(isFromSplash){
             startCountDown();
         }
@@ -66,7 +67,6 @@ public class KinTutorial extends BaseVideoActivity {
     private void startCountDown() {
         Intent countDownIntent = CountDownActivity.getIntent(this);
         if (startScreen(countDownIntent)) {
-            releaseMediaPlayer();
             finish();
         }
     }

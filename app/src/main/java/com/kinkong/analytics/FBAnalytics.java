@@ -27,10 +27,11 @@ public class FBAnalytics {
         analytics.logEvent(AnalyticsConst.APP_OPENED, new Bundle());
     }
 
-    public void answeredTapped(Context ctx, boolean isCorrect) {
+    public void answeredTapped(Context ctx, boolean isCorrect, int answerIndex) {
         FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(ctx);
         Bundle data = new Bundle();
         data.putBoolean(AnalyticsConst.IS_CORRECT, isCorrect);
+        data.putInt(AnalyticsConst.ANSWER_INDEX, answerIndex);
         analytics.logEvent(AnalyticsConst.ANSWER_TAPPED, data);
     }
 
