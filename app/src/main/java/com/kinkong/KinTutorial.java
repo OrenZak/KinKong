@@ -67,6 +67,7 @@ public class KinTutorial extends BaseVideoActivity {
     private void startCountDown() {
         Intent countDownIntent = CountDownActivity.getIntent(this);
         if (startScreen(countDownIntent)) {
+            releaseMediaPlayer();
             finish();
         }
     }
