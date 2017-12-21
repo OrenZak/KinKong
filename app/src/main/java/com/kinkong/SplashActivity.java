@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("kin_tutorial2.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
         try {
-            ((App) getApplication()).createAccount(this);
+            ((App) getApplication()).createAccount();
         } catch (CreateAccountException e) {
             e.printStackTrace();
             finish();
