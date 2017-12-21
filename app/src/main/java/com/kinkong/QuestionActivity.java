@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.kinkong.analytics.FBAnalytics;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
@@ -42,6 +43,7 @@ public class QuestionActivity extends BaseActivity {
         answerIndex = Integer.parseInt((String) view.getTag());
         updateSelection(answerIndex);
         sendAnswer();
+        FBAnalytics.getInstance().answeredTapped(view.getContext(), isWinner());
     };
 
     public static Intent getIntent(Context context) {

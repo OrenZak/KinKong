@@ -1,5 +1,6 @@
 package com.kinkong;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.kinkong.analytics.FBAnalytics;
 import com.kinkong.database.FBDatabase;
 import com.kinkong.database.data.Question;
 
@@ -47,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }
         firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -60,23 +63,22 @@ public class SplashActivity extends AppCompatActivity {
         if (currentUser != null) {
             Log.d(TAG, "already signInAnonymously");
             getFireBaseBasicData();
+            sendEvents();
         } else {
             firebaseAuth.signInAnonymously()
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInAnonymously:success");
-                                getFireBaseBasicData();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInAnonymously:failure", task.getException());
-                                Toast.makeText(SplashActivity.this, "Authentication failed. close and reopen app",
-                                        Toast.LENGTH_LONG).show();
-                                Toast.makeText(SplashActivity.this, "Authentication failed. close and reopen app",
-                                        Toast.LENGTH_LONG).show();
-                            }
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInAnonymously:success");
+                            getFireBaseBasicData();
+                            sendEvents();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInAnonymously:failure", task.getException());
+                            Toast.makeText(SplashActivity.this, "Authentication failed. close and reopen app",
+                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(SplashActivity.this, "Authentication failed. close and reopen app",
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
         }
@@ -147,6 +149,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         storageReference = null;
+    }
+
+    private void sendEvents() {
+        Context context = getApplicationContext();
+        FBAnalytics.getInstance().putUserData(context);
+        FBAnalytics.getInstance().appOpened(context);
     }
 
 }

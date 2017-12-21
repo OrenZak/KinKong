@@ -40,6 +40,13 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "259339067434-e4e5c9jetjbcaidcrvt8k41ksaje3b4i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kinfoundation.KinKong"
+              }
+            },
+            {
               "client_id": "259339067434-8c01asvvdppsceie25cb64vi7uarhr1d.apps.googleusercontent.com",
               "client_type": 3
             }
