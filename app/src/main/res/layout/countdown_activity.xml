@@ -76,7 +76,6 @@
                 android:gravity="center_horizontal"
                 android:onClick="openTelegramGroup"
                 android:padding="25dp"
-                android:text="@string/join_telegram"
                 android:visibility="gone" />
 
             <com.kinkong.ClockCountDownView

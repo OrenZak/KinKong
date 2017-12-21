@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +48,8 @@ public class CountDownActivity extends BaseActivity {
     private Thread animHourGlassThread;
     private TextView prize, balance, nextQuestionTitle;
     private ClockCountDownView clockCountDownView;
-    private View prizeTelegram, joinTelegram;
+    private View prizeTelegram;
+    private TextView joinTelegram;
     private boolean timerComplete;
     private boolean shouldAnimate = true;
 
@@ -199,9 +202,18 @@ public class CountDownActivity extends BaseActivity {
                 nextQuestionTitle.setText(getResources().getString(R.string.keep_me_posted));
                 clockCountDownView.setVisibility(View.GONE);
                 prizeTelegram.setVisibility(View.GONE);
-                joinTelegram.setVisibility(View.VISIBLE);
+                setJoinTelegramText();
             }
         });
+    }
+
+    private void setJoinTelegramText() {
+        SpannableString telegram = new SpannableString("Telegram");
+        telegram.setSpan(new UnderlineSpan(), 0, telegram.length(), 0);
+        joinTelegram.setText("Join our ");
+        joinTelegram.append(telegram);
+        joinTelegram.append(" community channel for more details about next questions and prize");
+        joinTelegram.setVisibility(View.VISIBLE);
     }
 
     private void startQuestion() {
