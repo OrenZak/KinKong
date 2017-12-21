@@ -1,5 +1,6 @@
 package com.kinkong;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -151,8 +152,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void sendEvents() {
-        FBAnalytics.getInstance().putUserData(getApplicationContext());
-        FBAnalytics.getInstance().appOpened(getApplicationContext());
+        Context context = getApplicationContext();
+        FBAnalytics.getInstance().putUserData(context);
+        FBAnalytics.getInstance().appOpened(context);
     }
 
 }
