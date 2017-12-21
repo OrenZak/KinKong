@@ -49,9 +49,11 @@ public class CountDownActivity extends BaseActivity {
     private TextView prize, balance, nextQuestionTitle;
     private ClockCountDownView clockCountDownView;
     private View prizeTelegram;
-    private TextView joinTelegram;
+    private TextView joinTelegram, keepMePosted;
     private boolean timerComplete;
     private boolean shouldAnimate = true;
+
+    private SpannableString telegramSpannable = new SpannableString("Telegram");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,10 @@ public class CountDownActivity extends BaseActivity {
         prizeTelegram = findViewById(R.id.prize_telegram);
         prize = findViewById(R.id.prize);
         joinTelegram = findViewById(R.id.join_telegram_title);
+        keepMePosted = findViewById(R.id.keep_me_posted);
         nextQuestionTitle = findViewById(R.id.next_question_title);
+        telegramSpannable.setSpan(new UnderlineSpan(), 0, telegramSpannable.length(), 0);
+        setKeepMePostedText();
         init();
     }
 
@@ -208,12 +213,15 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void setJoinTelegramText() {
-        SpannableString telegram = new SpannableString("Telegram");
-        telegram.setSpan(new UnderlineSpan(), 0, telegram.length(), 0);
         joinTelegram.setText("Join our ");
-        joinTelegram.append(telegram);
+        joinTelegram.append(telegramSpannable);
         joinTelegram.append(" community channel for more details about next questions and prize");
         joinTelegram.setVisibility(View.VISIBLE);
+    }
+
+    private void setKeepMePostedText() {
+        keepMePosted.setText("Keep Me Posted on ");
+        keepMePosted.append(telegramSpannable);
     }
 
     private void startQuestion() {

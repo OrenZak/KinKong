@@ -17,7 +17,6 @@
     <string name="public_address">Public Address:</string>
     <string name="what_s_kin">What\'s Kin?</string>
     <string name="keep_me_posted">Keep Me Posted!</string>
-    <string name="keep_me_posted_on_telegram">Keep Me Posted on <u>Telegram</u></string>
     <string name="copy">Copy</string>
     <string name="counter_delim">:</string>
 </resources>
