@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
-abstract class BaseVideoActivity extends BaseActivity {
+abstract class BaseVideoActivity extends BaseActivity implements TextureView.SurfaceTextureListener {
 
     protected TextureView textureView;
     private MediaPlayer mediaPlayer;
@@ -26,62 +26,76 @@ abstract class BaseVideoActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+    }
+
+    private void init() {
         textureView = findViewById(R.id.texture_view);
     }
 
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
+        initMediaPlayer(surfaceTexture);
+    }
+
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+    }
+
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        releaseMediaPlayer();
+        return false;
+    }
+
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+    }
+
     protected void prepareMediaPlayer() {
-        textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-            @Override
-            public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-                Surface surface = new Surface(surfaceTexture);
+        if(textureView == null){
+            init();
+        }
+        else{
+            if(textureView.isAvailable()) {
+                initMediaPlayer(textureView.getSurfaceTexture());
+                return;
+            }
+        }
+        textureView.setSurfaceTextureListener(this);
+    }
 
-                try {
-                    if (mediaPlayer == null) {
-                        mediaPlayer = new MediaPlayer();
-                    }
-                    if (isLocal()) {
-                        mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(getVideoURL()));
-                    } else {
-                        mediaPlayer.setDataSource(getVideoURL());
-                        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                                .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
-                                .build());
-                    }
-
-                    mediaPlayer.setSurface(surface);
-                    mediaPlayer.setLooping(false);
-                    mediaPlayer.prepareAsync();
-                    mediaPlayer.setOnCompletionListener(getCompletionListener());
-
-                    // Play video when the media source is ready for playback.
-                    mediaPlayer.setOnPreparedListener(mediaPlayer -> {
-                        adjustAspectRatio(mediaPlayer.getVideoWidth(), mediaPlayer.getVideoHeight());
-                        mediaPlayer.start();
-                    });
-
-                } catch (Exception e) {
-                    Log.e("BASE VIDEO ACTIVITY", e.getMessage());
-                    releaseMediaPlayer();
-                }
+    private void initMediaPlayer(SurfaceTexture surfaceTexture) {
+        try {
+            Surface surface = new Surface(surfaceTexture);
+            if (mediaPlayer == null) {
+                mediaPlayer = new MediaPlayer();
+            }
+            if (isLocal()) {
+                mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(getVideoURL()));
+            } else {
+                mediaPlayer.setDataSource(getVideoURL());
+                mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                        .setLegacyStreamType(AudioManager.STREAM_MUSIC)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
+                        .build());
             }
 
-            @Override
-            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+            mediaPlayer.setSurface(surface);
+            mediaPlayer.setLooping(false);
+            mediaPlayer.prepareAsync();
+            mediaPlayer.setOnCompletionListener(getCompletionListener());
 
-            }
+            // Play video when the media source is ready for playback.
+            mediaPlayer.setOnPreparedListener(mediaPlayer -> {
+                adjustAspectRatio(mediaPlayer.getVideoWidth(), mediaPlayer.getVideoHeight());
+                mediaPlayer.start();
+            });
 
-            @Override
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                releaseMediaPlayer();
-                return false;
-            }
-
-            @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-            }
-        });
+        } catch (Exception e) {
+            Log.e("BASE VIDEO ACTIVITY", e.getMessage());
+            releaseMediaPlayer();
+        }
     }
 
     /**
