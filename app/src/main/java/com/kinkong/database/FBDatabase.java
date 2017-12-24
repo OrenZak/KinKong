@@ -11,15 +11,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
-
 import com.kinkong.database.data.Question;
 
 public class FBDatabase {
+    public static final int MAX_QUESTIONS_IN_RAW = 3;
     private static final FBDatabase ourInstance = new FBDatabase();
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-    public int nextQuestionNum;
+    public int nextQuestionIndex, nextQuestionIndexOrigin;
     public Question nextQuestion;
 
     public static FBDatabase getInstance() {
@@ -43,8 +42,9 @@ public class FBDatabase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    nextQuestionNum = dataSnapshot.getValue(Integer.class);
-                    getQuestionAt(nextQuestionNum, valueEventListener);
+                    nextQuestionIndex = dataSnapshot.getValue(Integer.class);
+                    nextQuestionIndexOrigin = nextQuestionIndex;
+                    getQuestionAt(nextQuestionIndex, valueEventListener);
                 }
             }
 
@@ -70,22 +70,28 @@ public class FBDatabase {
     public void setWinner(String publicAddress) {
         String userUid = getUserUid();
         if (!TextUtils.isEmpty(userUid)) {
-            database.getReference("answers").child(nextQuestionNum + "").child("winners").child(userUid).setValue(publicAddress);
+            database.getReference("answers").child(nextQuestionIndex + "").child("winners").child(userUid).setValue(publicAddress);
         }
     }
 
     public void setAnswer(int answerIndex) {
-        DatabaseReference answerCount = database.getReference("answers/" + nextQuestionNum + "/answers_count/" + answerIndex);
+        DatabaseReference answerCount = database.getReference("answers/" + nextQuestionIndex + "/answers_count/" + answerIndex);
         upCount(answerCount);
     }
 
     public void getAnswersCount(ValueEventListener valueEventListener) {
-        database.getReference("answers/" + nextQuestionNum + "/answers_count").addListenerForSingleValueEvent(valueEventListener);
+        database.getReference("answers/" + nextQuestionIndex + "/answers_count").addListenerForSingleValueEvent(valueEventListener);
     }
 
-    public void updateNextQuestion() {
-        ++nextQuestionNum;
-        getQuestionAt(nextQuestionNum, new ValueEventListener() {
+    public boolean upateNextQuestion(boolean isWinner) {
+        boolean hasNextQuestion = false;
+        if (isWinner && shouldSeeNextQuestion()) {
+            ++nextQuestionIndex;
+            hasNextQuestion = true;
+        } else {
+            nextQuestionIndex = nextQuestionIndexOrigin + MAX_QUESTIONS_IN_RAW;
+        }
+        getQuestionAt(nextQuestionIndex, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 setNextQuestion(dataSnapshot.getValue(Question.class));
@@ -96,7 +102,11 @@ public class FBDatabase {
 
             }
         });
+        return hasNextQuestion;
+    }
 
+    private boolean shouldSeeNextQuestion() {
+        return (nextQuestionIndex + 1) - nextQuestionIndexOrigin < MAX_QUESTIONS_IN_RAW;
     }
 
     private void upCount(DatabaseReference postRef) {

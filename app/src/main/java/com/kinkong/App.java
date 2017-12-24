@@ -14,14 +14,14 @@ import kin.sdk.core.exception.EthereumClientException;
 public class App extends Application {
 
     //based on parity
-    private final String ROPSTEN_TEST_NET_URL = "http://parity.rounds.video:8545";
-    private final String MAIN_NET_URL = "http://mainnet.rounds.video:8545";
-
+    private static final String ROPSTEN_TEST_NET_URL = "http://parity.rounds.video:8545";
+    private static final String MAIN_NET_URL = "http://mainnet.rounds.video:8545";
     private static final String PASSPHRASE_KEY = "passphraeKey";
     private static final String TUTORIAL_KEY = "tutorialKey";
     private static final String SHARE_PREF = "kingkongSharePref";
     private KinClient kinClient = null;
     private SharedPreferences sharedPreferences;
+
     private enum NetWorkType {
         MAIN,
         ROPSTEN
@@ -38,9 +38,9 @@ public class App extends Application {
         return sharedPreferences.getString(PASSPHRASE_KEY, null);
     }
 
-    public void createAccount(Context context) throws CreateAccountException {
+    public void createAccount() throws CreateAccountException {
         String passphrase = getPassphrase();
-        if(passphrase == null){
+        if (passphrase == null) {
             passphrase = createPassphrase();
         }
         kinClient.createAccount(passphrase);

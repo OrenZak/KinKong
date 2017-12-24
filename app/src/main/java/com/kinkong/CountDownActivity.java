@@ -128,8 +128,8 @@ public class CountDownActivity extends BaseActivity {
         updatePendingBalance();
         startThreadAnimation();
         if (timerComplete) {
-            int nextQuestionNum = FBDatabase.getInstance().nextQuestionNum;
-            FBDatabase.getInstance().getQuestionAt(nextQuestionNum++, new ValueEventListener() {
+            int nextQuestionNum = FBDatabase.getInstance().nextQuestionIndex;
+            FBDatabase.getInstance().getQuestionAt(nextQuestionNum + FBDatabase.MAX_QUESTIONS_IN_RAW, new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     question = dataSnapshot.getValue(Question.class);
