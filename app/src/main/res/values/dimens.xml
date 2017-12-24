@@ -6,6 +6,7 @@
 
     <dimen name="title_big">24sp</dimen>
     <dimen name="title_normal">20sp</dimen>
+    <dimen name="title_small">16sp</dimen>
     <dimen name="count_down_font_size_big">34sp</dimen>
     <dimen name="bottom_panel_height">60dp</dimen>
 
