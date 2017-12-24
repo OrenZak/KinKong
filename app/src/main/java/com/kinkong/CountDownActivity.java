@@ -75,7 +75,6 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void init() {
-        startThreadAnimation();
         initServerTime();
     }
 
