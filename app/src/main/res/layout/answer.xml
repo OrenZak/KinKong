@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:gravity="center">
 
@@ -13,9 +14,14 @@
         android:background="@drawable/answer_bg_drawable"
         android:gravity="left"
         style="@style/text.Blue"
-        android:paddingStart="15dp"
+        android:paddingStart="@dimen/main_margin"
+        android:paddingEnd="@dimen/main_margin"
         android:textColor="@drawable/answer_text_color"
-        android:text="some answer with very long line" />
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        tools:text="This is the long answer you will see here"/>
 
     <TextView
         android:id="@+id/voting"
