@@ -46,6 +46,32 @@
                 android:text="@string/you_are_a_rock_star" />
 
 
+            <LinearLayout
+                android:id="@+id/next_question_countdown_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/text.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wait For Next Question " />
+
+                <com.kinkong.ClockCountDownView
+                    android:id="@+id/next_question_count_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"></com.kinkong.ClockCountDownView>
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </FrameLayout>
 
@@ -81,8 +107,7 @@
             android:id="@+id/clock_count_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="15dp"
-            />
+            android:paddingBottom="15dp" />
 
         <TextView
             style="@style/text.White"
