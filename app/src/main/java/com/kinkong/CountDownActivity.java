@@ -154,7 +154,7 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void updatePrize() {
-        String prizeStr = getPrize() + " KIN";
+        String prizeStr = getPrize() + "K KIN";
         prize.setText(prizeStr);
     }
 
