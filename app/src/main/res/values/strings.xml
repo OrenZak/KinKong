@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KinKong</string>
+    <string name="app_name">Kin Kong</string>
     <string name="next_question_in">Next Question In:</string>
     <string name="my_balance">My Balance:</string>
     <string name="total_prize_is">Total prize is:</string>
@@ -19,4 +19,5 @@
     <string name="keep_me_posted">Keep Me Posted!</string>
     <string name="copy">Copy</string>
     <string name="counter_delim">:</string>
+    <string name="total_prize_is_distributed_between_all_winners">Total prize is distributed\nbetween all winners</string>
 </resources>

@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="-25dp"
             android:orientation="vertical">
 
             <ImageView
@@ -93,8 +94,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="50dp"
-            android:orientation="vertical">
+            android:layout_marginBottom="25dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -118,11 +121,23 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/disclaimer"
+                style="@style/text.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:text="@string/total_prize_is_distributed_between_all_winners"
+                android:textSize="@dimen/title_small" />
+
+            <TextView
                 android:id="@+id/keep_me_posted"
                 style="@style/text.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="35dp"
                 android:onClick="openTelegramGroup" />
 
         </LinearLayout>
