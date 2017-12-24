@@ -60,7 +60,7 @@
                     style="@style/text.White"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wait For Next Question " />
+                    android:text="@string/next_question_in" />
 
                 <com.kinkong.ClockCountDownView
                     android:id="@+id/next_question_count_down"
