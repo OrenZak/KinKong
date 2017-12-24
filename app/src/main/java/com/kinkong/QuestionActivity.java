@@ -23,7 +23,7 @@ import kin.sdk.core.KinAccount;
 
 public class QuestionActivity extends BaseActivity {
 
-    private static final int DURATION_SECONDS = 99;
+    private static final int DURATION_SECONDS = 10;
     private static final float UNSELECTED_ALPHA = 0.7f;
     private static final float SELECTED_ALPHA = 1f;
     private static final long WAIT_TIME_BETWEEN_QUESTIONS = 10000;
