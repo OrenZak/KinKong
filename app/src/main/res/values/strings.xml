@@ -6,7 +6,7 @@
     <string name="whats_kin">Envisioned as a general purpose cryptocurrency for use in everyday digital services, Kin will be used for all transaction within the Kin Ecosystem.\n\nImplemented on the public Ethereum blockchain as an ERC20 token, Kin will server as the basis of interoperability with other digital services in the Kin Ecosystem.</string>
     <string name="question">Question:</string>
     <string name="wrong_answer">Wrong Answer :(</string>
-    <string name="try_next_time">Try Next Time!</string>
+    <string name="try_next_time">Try Again Next Time!</string>
     <string name="correct">Correct!</string>
     <string name="you_are_a_rock_star">You are a Rock Star!</string>
     <string name="keystore">Keystore:</string>
