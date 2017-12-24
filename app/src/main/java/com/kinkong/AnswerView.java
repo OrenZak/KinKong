@@ -36,6 +36,7 @@ public class AnswerView extends FrameLayout {
         View view = inflater.inflate(R.layout.answer, this, true);
         answer = view.findViewById(R.id.answer);
         voting = view.findViewById(R.id.voting);
+        answer.setSelected(true); // Start marquee
     }
 
     public void setAnswer(String answer) {
@@ -43,9 +44,9 @@ public class AnswerView extends FrameLayout {
     }
 
     @Override
-    public void setSelected(boolean selected) {
-        super.setSelected(selected);
-        answer.setSelected(selected);
+    public void setActivated(boolean activated) {
+        super.setActivated(activated);
+        answer.setActivated(activated);
     }
 
     public void animateVoting(float ratio) {

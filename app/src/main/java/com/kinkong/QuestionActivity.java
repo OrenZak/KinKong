@@ -40,7 +40,7 @@ public class QuestionActivity extends BaseActivity {
 
     private View.OnClickListener answerClickListener = view -> {
         AnswerView answerView = (AnswerView) view;
-        answerView.setSelected(true);
+        answerView.setActivated(true);
         disableClicks();
         int answerIndex = Integer.parseInt((String) view.getTag());
         updateSelection(answerIndex);
@@ -219,7 +219,7 @@ public class QuestionActivity extends BaseActivity {
         ((TextView) findViewById(R.id.question)).setText(question.getQuestion());
 
         List<String> answersStrArray = question.getAnswers();
-        for (int i = 0; i < answerViewList.size(); i++) {
+        for (int i = 0; i < answersStrArray.size(); i++) {
             AnswerView answerView = answerViewList.get(i);
             answerView.setAnswer(answersStrArray.get(i));
             answerView.setOnClickListener(answerClickListener);
