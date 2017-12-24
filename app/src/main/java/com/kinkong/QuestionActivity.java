@@ -35,8 +35,6 @@ public class QuestionActivity extends BaseActivity {
 
     private List<AnswerView> answerViewList = new ArrayList<>(4);
     private boolean isWinner;
-    private boolean hasNextQuestion;
-
 
     private View.OnClickListener answerClickListener = view -> {
         AnswerView answerView = (AnswerView) view;
@@ -70,19 +68,24 @@ public class QuestionActivity extends BaseActivity {
         releaseMediaPlayer();
     }
 
-    public void closeScreen(long waitTime) {
-        root.postDelayed(() -> {
+    public void waitForNextScreen(boolean hasNextQuestion) {
+        if (isWinner && hasNextQuestion) {
+            findViewById(R.id.next_question_countdown_layout).setVisibility(View.VISIBLE);
+        }
+        ClockCountDownView countDownView = findViewById(R.id.next_question_count_down);
+        countDownView.startCount(WAIT_TIME_BETWEEN_QUESTIONS);
+        countDownView.setListener(() -> {
             Intent intent;
             if (hasNextQuestion) {
-                intent = QuestionVideoActivity.getIntent(this);
+                intent = QuestionVideoActivity.getIntent(QuestionActivity.this);
             } else {
-                intent = CountDownActivity.getIntent(this);
+                intent = CountDownActivity.getIntent(QuestionActivity.this);
             }
             startScreen(intent);
             finish();
-        }, waitTime);
+        });
     }
-    
+
     private void updateSelection(int index) {
         for (int i = 0; i < answerViewList.size(); i++) {
             if (i != index) {
@@ -189,8 +192,8 @@ public class QuestionActivity extends BaseActivity {
         updateAnswersColors();
         updateLayout();
         animateVoting();
-        hasNextQuestion = FBDatabase.getInstance().upateNextQuestion(isWinner);
-        closeScreen(WAIT_TIME_BETWEEN_QUESTIONS);
+        boolean hasNextQuestion = FBDatabase.getInstance().upateNextQuestion(isWinner);
+        waitForNextScreen(hasNextQuestion);
     }
 
     private void updateLayout() {
