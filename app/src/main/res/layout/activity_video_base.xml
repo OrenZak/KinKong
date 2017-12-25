@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="@string/loading_video"
+            android:text="@string/loading"
             android:textSize="@dimen/title_big" />
 
         <ProgressBar
