@@ -2,7 +2,28 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@drawable/blue_gradient">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/loading_video"
+            android:textSize="@dimen/title_big" />
+
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
 
     <TextureView
         android:id="@+id/texture_view"
@@ -11,18 +32,18 @@
 
     <TextView
         android:id="@+id/skip"
+        style="@style/text.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:paddingStart="35dp"
-        android:paddingEnd="35dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="@dimen/block_margin"
-        style="@style/text.Blue"
         android:background="@drawable/background_oval_rounded_white"
-        android:visibility="gone"
-        android:text="Skip"/>
+        android:paddingBottom="8dp"
+        android:paddingEnd="35dp"
+        android:paddingStart="35dp"
+        android:paddingTop="8dp"
+        android:text="Skip"
+        android:textAllCaps="false"
+        android:visibility="gone" />
 
 </FrameLayout>

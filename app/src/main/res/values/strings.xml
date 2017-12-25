@@ -8,7 +8,7 @@
     <string name="wrong_answer">Wrong Answer :(</string>
     <string name="try_next_time">Try Again Next Time!</string>
     <string name="correct">Correct!</string>
-    <string name="you_are_a_rock_star">You are a Rock Star!</string>
+    <string name="you_are_a_rock_star">You Are A Rock Star!</string>
     <string name="keystore">Keystore:</string>
     <string name="done">Done</string>
     <string name="enter_a_passphrase">Enter a passphrase</string>
@@ -20,4 +20,5 @@
     <string name="copy">Copy</string>
     <string name="counter_delim">:</string>
     <string name="total_prize_is_distributed_between_all_winners">Total prize is distributed\nbetween all winners</string>
+    <string name="loading_video">Loading video</string>
 </resources>
