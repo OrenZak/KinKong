@@ -31,6 +31,7 @@ abstract class BaseVideoActivity extends BaseActivity implements TextureView.Sur
 
     private void init() {
         textureView = findViewById(R.id.texture_view);
+        textureView.setAlpha(0);
     }
 
     @Override
@@ -53,11 +54,10 @@ abstract class BaseVideoActivity extends BaseActivity implements TextureView.Sur
     }
 
     protected void prepareMediaPlayer() {
-        if(textureView == null){
+        if (textureView == null) {
             init();
-        }
-        else{
-            if(textureView.isAvailable()) {
+        } else {
+            if (textureView.isAvailable()) {
                 initMediaPlayer(textureView.getSurfaceTexture());
                 return;
             }
@@ -80,7 +80,6 @@ abstract class BaseVideoActivity extends BaseActivity implements TextureView.Sur
                         .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
                         .build());
             }
-
             mediaPlayer.setSurface(surface);
             mediaPlayer.setLooping(false);
             mediaPlayer.prepareAsync();
@@ -89,6 +88,7 @@ abstract class BaseVideoActivity extends BaseActivity implements TextureView.Sur
             // Play video when the media source is ready for playback.
             mediaPlayer.setOnPreparedListener(mediaPlayer -> {
                 adjustAspectRatio(mediaPlayer.getVideoWidth(), mediaPlayer.getVideoHeight());
+                textureView.animate().alpha(1).setDuration(500).start();
                 mediaPlayer.start();
             });
 
