@@ -109,7 +109,7 @@
                     style="@style/text.White"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_prize_is"
+                    android:text="@string/total_prize"
                     android:textSize="@dimen/title_big" />
 
                 <TextView
