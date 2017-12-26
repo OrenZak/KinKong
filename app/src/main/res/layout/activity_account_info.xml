@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/blue_gradient">
 
     <ImageView
@@ -56,19 +56,19 @@
 
     <TextView
         android:id="@+id/public_address"
+        style="@style/text.Blue"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginEnd="@dimen/block_margin"
         android:layout_marginStart="@dimen/block_margin"
         android:layout_marginTop="8dp"
-        android:padding="@dimen/main_margin"
-        style="@style/text.Blue"
-        android:textSize="15sp"
         android:background="@drawable/background_rounded_white"
+        android:padding="@dimen/main_margin"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/public_address_title"
-        tools:text="0xkjshdkjahd3287jkdskhkjsdhfjksdhfjksdhfjkshdfjkhsdfjh"/>
+        tools:text="0xkjshdkjahd3287jkdskhkjsdhfjksdhfjksdhfjkshdfjkhsdfjh" />
 
 
     <TextView
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/block_margin"
         android:layout_marginTop="24dp"
-        android:text="@string/backup_you_account"
+        android:text="@string/backup_your_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/public_address" />
 
@@ -98,27 +98,27 @@
 
         <EditText
             android:id="@+id/backup_passphrase"
-            android:layout_width="0dp"
-            android:paddingLeft="@dimen/main_margin"
-            android:hint="@string/enter_a_passphrase"
             style="@style/text.Blue"
-            android:textSize="15sp"
-            android:background="@drawable/background_left_rounded_white"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
-            tools:text="lala"/>
+            android:background="@drawable/background_left_rounded_white"
+            android:hint="@string/enter_a_passphrase"
+            android:paddingLeft="@dimen/main_margin"
+            android:textSize="15sp"
+            tools:text="lala" />
 
         <TextView
             android:id="@+id/done"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/background_right_rounded_blue"
             android:layout_weight="0.2"
+            android:background="@drawable/background_right_rounded_blue"
+            android:enabled="false"
             android:gravity="center"
             android:text="@string/done"
             android:textColor="@drawable/text_view_selector"
-            android:textSize="14sp"
-            android:enabled="false"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -131,47 +131,46 @@
         android:layout_marginStart="@dimen/block_margin"
         android:layout_marginTop="24dp"
         android:text="@string/keystore"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backup_container"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/copy_private"
+        style="@style/text.White.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/block_margin"
-        style="@style/text.White.Bold"
         android:text="@string/copy"
         android:textAllCaps="true"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/private_key_title"
         app:layout_constraintTop_toTopOf="@+id/private_key_title"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 
     <TextView
         android:id="@+id/private_key"
+        style="@style/text.Blue"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:isScrollContainer="true"
-        android:scrollbars="vertical"
         android:layout_marginEnd="@dimen/block_margin"
         android:layout_marginStart="@dimen/block_margin"
         android:layout_marginTop="8dp"
-        style="@style/text.Blue"
-        android:textSize="15sp"
-        android:padding="@dimen/main_margin"
         android:background="@drawable/background_rounded_white"
+        android:isScrollContainer="true"
+        android:padding="@dimen/main_margin"
+        android:scrollbars="vertical"
+        android:textSize="15sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/private_key_title"
         tools:text="{\naksdk\lkajsdkj\njksdklasdskjdfhsjkdfhjksdhfjksdhf\n}"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-
+        tools:visibility="visible" />
 
 
     <TextView
@@ -182,8 +181,8 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="@string/what_s_kin"
-        android:textSize="20sp"
         android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

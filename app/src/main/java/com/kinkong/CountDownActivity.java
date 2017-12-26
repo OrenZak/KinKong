@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import kin.sdk.core.Balance;
 import kin.sdk.core.ResultCallback;
@@ -43,6 +44,7 @@ public class CountDownActivity extends BaseActivity {
     private final static int MAX_HOURS = 100;
     private final static long MAX_HOURS_IN_MILLISECONDS = MAX_HOURS * 60 * 60 * 1000;
     private final static String TELEGRAM_LINK = "https://t.me/kinfoundation";
+    DecimalFormat kinFormat = new DecimalFormat("#,###,###");
     private Question question;
     private Animatable animatable;
     private Thread animHourGlassThread;
@@ -154,13 +156,26 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void updatePrize() {
-        String prizeStr = getPrize() + "K KIN";
-        prize.setText(prizeStr);
+        int prize = getPrize();
+        String formatPrize = formatKinAmount(prize, true);
+        this.prize.setText(formatPrize);
+    }
+
+    private String formatKinAmount(int totalKins, boolean useK) {
+        String prizeStr = "";
+        if (useK && totalKins >= 10000) {
+            int k = totalKins / 1000;
+            prizeStr = k + "K";
+        } else {
+            prizeStr = kinFormat.format(totalKins);
+        }
+        return prizeStr + " KIN";
     }
 
     private void updatePendingBalance(Balance accountBalance) {
-        String balanceStr = accountBalance.value(1) + " KIN";
-        balance.setText(balanceStr);
+        int balance = accountBalance.value().intValue();
+        String formatKinAmount = formatKinAmount(balance, false);
+        this.balance.setText(formatKinAmount);
     }
 
     private int getPrize() {
