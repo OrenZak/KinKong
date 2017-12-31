@@ -30,7 +30,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        createKinClient(NetWorkType.ROPSTEN);
+        createKinClient(NetWorkType.MAIN);
         sharedPreferences = getSharedPreferences(SHARE_PREF, MODE_PRIVATE);
     }
 
