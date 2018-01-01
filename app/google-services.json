@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "259339067434-3sfk5er4cupdm7so56dtilmcp4t3v4bl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kinkong",
+            "certificate_hash": "1b7ede8b4f5f46e107ccd30772a072101225963e"
+          }
+        },
+        {
           "client_id": "259339067434-5ijh8jo5pf12t476rc2r4clos05e8lj4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -40,15 +48,15 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "259339067434-8c01asvvdppsceie25cb64vi7uarhr1d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
               "client_id": "259339067434-e4e5c9jetjbcaidcrvt8k41ksaje3b4i.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.kinfoundation.KinKong"
               }
-            },
-            {
-              "client_id": "259339067434-8c01asvvdppsceie25cb64vi7uarhr1d.apps.googleusercontent.com",
-              "client_type": 3
             }
           ]
         },

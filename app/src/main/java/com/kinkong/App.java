@@ -1,7 +1,6 @@
 package com.kinkong;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.UUID;
