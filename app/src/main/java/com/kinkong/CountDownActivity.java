@@ -77,7 +77,11 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void init() {
-        initServerTime();
+        if (question != null) {
+            initServerTime();
+        } else {
+            updateKeepMePostedUi();
+        }
     }
 
     private void updatePendingBalance() {
@@ -209,20 +213,26 @@ public class CountDownActivity extends BaseActivity {
     private void initCountDown(long serverTime) {
         long time = question.getTimeStamp();
         long countDownTime = time - serverTime;
-        updateUi(countDownTime);
+        if (isValidTime(countDownTime)) {
+            updateCountDownUi(countDownTime);
+        } else {
+            updateKeepMePostedUi();
+        }
     }
 
-    private void updateUi(final long countDownTime) {
+    private void updateKeepMePostedUi() {
         runOnUiThread(() -> {
-            if (isValidTime(countDownTime)) {
-                updatePrize();
-                startCountDown(countDownTime);
-            } else {
-                nextQuestionTitle.setText(getResources().getString(R.string.keep_me_posted));
-                clockCountDownView.setVisibility(View.GONE);
-                prizeTelegram.setVisibility(View.GONE);
-                setJoinTelegramText();
-            }
+            nextQuestionTitle.setText(getResources().getString(R.string.keep_me_posted));
+            clockCountDownView.setVisibility(View.GONE);
+            prizeTelegram.setVisibility(View.GONE);
+            setJoinTelegramText();
+        });
+    }
+
+    private void updateCountDownUi(long countDownTime) {
+        runOnUiThread(() -> {
+            updatePrize();
+            startCountDown(countDownTime);
         });
     }
 
