@@ -50,7 +50,7 @@ android {
             include "x86", "armeabi-v7a", "mips"
 
             // Specifies that we do not want to also generate a universal APK that includes all ABIs.
-            universalApk false
+            universalApk true
         }
 
     }
