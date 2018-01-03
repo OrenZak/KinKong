@@ -149,14 +149,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_panel_height"
         android:layout_gravity="bottom"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:onClick="startAccountInfo">
 
         <ImageView
             android:id="@+id/wallet_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
-            android:onClick="startAccountInfo"
             android:paddingRight="20dp"
             android:scaleType="centerInside"
             android:src="@drawable/enter_icon" />
