@@ -2,21 +2,19 @@
 An easy, fun and cool trivia game where you can earn KIN !
 
 ## What's it all about?
-Each day we will update a trivia question.
-When the timer countdown will end you will see our community manager ask you a simple question related to crypto.<br/>
-You will have 10 seconds to answer the question, keep it in mind: once you select an answer you won't be able to change it.<br/>
-After the 10 seconds you'll see if your answer was correct or wrong.
-If you were correct you will get to your wallet the daily relative prize: which is the total daily prize divided by the winners count.<br/>
-For example if the daily total prize is 100KIN and there are 10 that got the answer correct, each of them will get 10KIN.
+Kin Kong is an awesome application that showcases Kin and is designed specifically for the crypto community.<br/>
+If you are a cryptocurrency enthusiast and want to experiment with Kin and win prizes, join our trivia game twice a week. 
 
 
 ## How to play
-Once we will upload the app to GooglePlay.
- * Open the app and this will create a Kin wallet automatically.
- * Wait for the timer countdown to end.
- * Listen to the question, and choose an answer.
- * After 10 seconds you'll see if you were correct and KIN will be send to your wallet.
+It’s simple, each week, on Monday and Wednesday at 10am PT/1pm ET, we’ll post a new series of questions.<br/>
+Whomever answers all three questions correctly will get a piece of the Kin reward.<br/>
+You’ll have 10 seconds to answer each question right, so be sure to pay attention and be prepared to have your crypto knowledge tested.<br/>
+The prize amount will be distributed between all the winners within 48 hours of each question period.
  
 
 ## Screenshots
-<img src="https://user-images.githubusercontent.com/8303735/34102626-84405c10-e3f2-11e7-9e94-a1e1453a1605.png" width="30%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102624-83fb9ba2-e3f2-11e7-8063-6a28bf567584.png" width="30%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102622-83d8d496-e3f2-11e7-8fef-d52c591ae488.png" width="30%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102625-841b2e22-e3f2-11e7-88d0-45ab75d867fa.png" width="30%"></img> <img src="https://user-images.githubusercontent.com/8303735/34102627-846279f8-e3f2-11e7-9bc1-24568810b1c3.png" width="30%"></img> 
+<img src="https://user-images.githubusercontent.com/8303735/34582455-840bab34-f19c-11e7-95ca-5111a9a13e13.png" width="30%"></img>
+<img src="https://user-images.githubusercontent.com/8303735/34582290-14e8b56c-f19c-11e7-82f7-10be80e9b02e.png" width="30%"></img>
+<img src="https://user-images.githubusercontent.com/8303735/34582414-620f2baa-f19c-11e7-9e44-6c57c885d5c6.png" width="30%"></img>
+<img src="https://user-images.githubusercontent.com/8303735/34582500-b3b2a8ec-f19c-11e7-9e0b-6e56b10288d3.png" width="30%"></img> 
