@@ -10,7 +10,6 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -139,8 +138,7 @@ public class CountDownActivity extends BaseActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     question = dataSnapshot.getValue(Question.class);
                     if (question == null) {
-                        Toast.makeText(CountDownActivity.this, "No More Questions for now... ", Toast.LENGTH_SHORT).show();
-                        finish();
+                        updateKeepMePostedUi();
                     } else {
                         init();
                     }
