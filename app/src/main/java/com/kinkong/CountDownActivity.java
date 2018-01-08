@@ -40,7 +40,7 @@ public class CountDownActivity extends BaseActivity {
         return new Intent(context, CountDownActivity.class);
     }
 
-    private final static String SERVER_TIME_URL = "https://us-central1-kinkong-977fc.cloudfunctions.net/date";
+    private final static String SERVER_TIME_URL = "http://www.convert-unix-time.com/api?timestamp=now";
     private final static int MAX_HOURS = 100;
     private final static long MAX_HOURS_IN_MILLISECONDS = MAX_HOURS * 60 * 60 * 1000;
     private final static String TELEGRAM_LINK = "https://t.me/kinfoundation";
@@ -192,19 +192,17 @@ public class CountDownActivity extends BaseActivity {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(CountDownActivity.this, "Error loading data from server", Toast.LENGTH_LONG).show();
-                finish();
+                updateKeepMePostedUi();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().string());
-                    long serverTime = Long.parseLong(jsonObject.get("time").toString());
-                    initCountDown(serverTime);
+                    long serverTime = Long.parseLong(jsonObject.get("timestamp").toString());
+                    initCountDown(serverTime * 1000);
                 } catch (JSONException e) {
-                    Toast.makeText(CountDownActivity.this, "Error loading data from server", Toast.LENGTH_LONG).show();
-                    finish();
+                    updateKeepMePostedUi();
                 }
             }
         });
