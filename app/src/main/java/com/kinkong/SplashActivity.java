@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kinkong-977fc.appspot.com").child("KinKong_Tutorial.mp4");
+        storageReference = FirebaseStorage.getInstance().getReference().child("KinKong_Tutorial.mp4");
         kinTutorialFile = new File(getFilesDir() + File.separator + "kin_tutorial.mp4");
         try {
             ((App) getApplication()).createAccount();
