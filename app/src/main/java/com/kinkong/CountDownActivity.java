@@ -154,8 +154,8 @@ public class CountDownActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         shouldAnimate = false;
     }
 
