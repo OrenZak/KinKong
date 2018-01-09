@@ -85,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                app:hours="true" />
+                app:hours="true"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

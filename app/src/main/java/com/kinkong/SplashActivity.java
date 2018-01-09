@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,11 +40,9 @@ public class SplashActivity extends AppCompatActivity {
         try {
             ((App) getApplication()).createAccount();
         } catch (CreateAccountException e) {
-            e.printStackTrace();
-            finish();
+            moveToErrorUpdate();
         }
         firebaseAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
@@ -69,12 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                             getFireBaseBasicData();
                             sendEvents();
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInAnonymously:failure", task.getException());
-                            Toast.makeText(SplashActivity.this, "Authentication failed. close and reopen app",
-                                    Toast.LENGTH_LONG).show();
-                            Toast.makeText(SplashActivity.this, "Authentication failed. close and reopen app",
-                                    Toast.LENGTH_LONG).show();
+                            moveToErrorUpdate();
                         }
                     });
         }
@@ -106,7 +98,6 @@ public class SplashActivity extends AppCompatActivity {
     private void downloadTutorial() throws IOException {
         if (kinTutorialFile.exists()) {
             new Handler().postDelayed(this::moveToTutorial, 1000);
-
         } else {
             outStream = new FileOutputStream(kinTutorialFile);
             storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
@@ -116,6 +107,7 @@ public class SplashActivity extends AppCompatActivity {
                     moveToTutorial();
                 } catch (IOException ex) {
                     ex.printStackTrace();
+                    moveToErrorUpdate();
                 }
             });
         }
@@ -123,6 +115,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void moveToTutorial() {
         startActivity(KinTutorial.getIntent(this, true));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
+    }
+
+    private void moveToErrorUpdate() {
+        startActivity(CountDownActivity.getIntent(this, true));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

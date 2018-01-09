@@ -35,8 +35,16 @@ import okhttp3.Response;
 
 public class CountDownActivity extends BaseActivity {
 
+    private static final String HAS_ERROR_PARAM = "hasErrorParam";
+
+    public static Intent getIntent(Context context, boolean error) {
+        Intent intent = new Intent(context, CountDownActivity.class);
+        intent.putExtra(HAS_ERROR_PARAM, error);
+        return intent;
+    }
+
     public static Intent getIntent(Context context) {
-        return new Intent(context, CountDownActivity.class);
+        return getIntent(context, false);
     }
 
     private final static String SERVER_TIME_URL = "http://www.convert-unix-time.com/api?timestamp=now";
@@ -72,7 +80,12 @@ public class CountDownActivity extends BaseActivity {
         nextQuestionTitle = findViewById(R.id.next_question_title);
         telegramSpannable.setSpan(new UnderlineSpan(), 0, telegramSpannable.length(), 0);
         setKeepMePostedText();
-        init();
+        boolean hasError = getIntent().getBooleanExtra(HAS_ERROR_PARAM, false);
+        if(hasError){
+            updateKeepMePostedUi();
+        }else {
+            init();
+        }
     }
 
     private void init() {
@@ -102,6 +115,7 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private void startCountDown(long countDownTime) {
+        clockCountDownView.setVisibility(View.VISIBLE);
         clockCountDownView.setListener(this::startQuestion);
         clockCountDownView.startCount(countDownTime);
     }
@@ -164,7 +178,7 @@ public class CountDownActivity extends BaseActivity {
     }
 
     private String formatKinAmount(int totalKins, boolean useK) {
-        String prizeStr = "";
+        String prizeStr;
         if (useK && totalKins >= 10000) {
             int k = totalKins / 1000;
             prizeStr = k + "K";
