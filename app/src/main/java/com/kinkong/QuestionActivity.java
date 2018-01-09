@@ -31,7 +31,6 @@ public class QuestionActivity extends BaseActivity {
     private Question question;
     private KinAccount account;
     private MediaPlayer mediaPlayer;
-    private View root;
 
     private List<AnswerView> answerViewList = new ArrayList<>(4);
     private boolean isWinner;
@@ -55,7 +54,6 @@ public class QuestionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity);
-        root = findViewById(R.id.root);
         account = ((App) getApplication()).getKinClient().getAccount();
         question = FBDatabase.getInstance().nextQuestion;
         initViews();
