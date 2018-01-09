@@ -35,11 +35,11 @@ import okhttp3.Response;
 
 public class CountDownActivity extends BaseActivity {
 
-    private static final String HAS_ERROR_PARAM = "hasErrorParam";
+    private static final String HAS_KEEP_POSTED_PARAM = "keepMePosted";
 
-    public static Intent getIntent(Context context, boolean error) {
+    public static Intent getIntent(Context context, boolean keepMePosted) {
         Intent intent = new Intent(context, CountDownActivity.class);
-        intent.putExtra(HAS_ERROR_PARAM, error);
+        intent.putExtra(HAS_KEEP_POSTED_PARAM, keepMePosted);
         return intent;
     }
 
@@ -47,7 +47,7 @@ public class CountDownActivity extends BaseActivity {
         return getIntent(context, false);
     }
 
-    private final static String SERVER_TIME_URL = "http://www.convert-unix-time.com/api?timestamp=now";
+    private final static String SERVER_TIME_URL = "https://us-central1-kinkong-977fc.cloudfunctions.net/date";
     private final static int MAX_HOURS = 100;
     private final static long MAX_HOURS_IN_MILLISECONDS = MAX_HOURS * 60 * 60 * 1000;
     private final static String TELEGRAM_LINK = "https://t.me/kinfoundation";
@@ -80,10 +80,10 @@ public class CountDownActivity extends BaseActivity {
         nextQuestionTitle = findViewById(R.id.next_question_title);
         telegramSpannable.setSpan(new UnderlineSpan(), 0, telegramSpannable.length(), 0);
         setKeepMePostedText();
-        boolean hasError = getIntent().getBooleanExtra(HAS_ERROR_PARAM, false);
-        if(hasError){
+        boolean keepMePosted = getIntent().getBooleanExtra(HAS_KEEP_POSTED_PARAM, false);
+        if (keepMePosted) {
             updateKeepMePostedUi();
-        }else {
+        } else {
             init();
         }
     }
@@ -211,8 +211,8 @@ public class CountDownActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().string());
-                    long serverTime = Long.parseLong(jsonObject.get("timestamp").toString());
-                    initCountDown(serverTime * 1000);
+                    long serverTime = Long.parseLong(jsonObject.get("time").toString());
+                    initCountDown(serverTime);
                 } catch (JSONException e) {
                     updateKeepMePostedUi();
                 }

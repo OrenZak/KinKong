@@ -79,9 +79,8 @@ public class QuestionActivity extends BaseActivity {
             } else {
                 intent = CountDownActivity.getIntent(QuestionActivity.this);
             }
-            if(startScreen(intent)) {
-                finish();
-            }
+            startScreen(intent);
+            finish();
         });
     }
 

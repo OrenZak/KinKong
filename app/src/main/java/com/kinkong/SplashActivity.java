@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
         try {
             ((App) getApplication()).createAccount();
         } catch (CreateAccountException e) {
-            moveToErrorUpdate();
+            moveToKeepMePosted();
         }
         firebaseAuth = FirebaseAuth.getInstance();
     }
@@ -66,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                             getFireBaseBasicData();
                             sendEvents();
                         } else {
-                            moveToErrorUpdate();
+                            moveToKeepMePosted();
                         }
                     });
         }
@@ -106,8 +106,7 @@ public class SplashActivity extends AppCompatActivity {
                     outStream.close();
                     moveToTutorial();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
-                    moveToErrorUpdate();
+                    moveToKeepMePosted();
                 }
             });
         }
@@ -119,7 +118,7 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
-    private void moveToErrorUpdate() {
+    private void moveToKeepMePosted() {
         startActivity(CountDownActivity.getIntent(this, true));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
